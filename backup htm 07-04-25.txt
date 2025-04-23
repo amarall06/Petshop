@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dog Ville Pet Shop</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="shortcut icon" href="imagens/favicon2.png" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="normalize.css">
+
+    <!--[if lt IE 9]>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+<![endif]-->
+
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css">
+
+      <!-- Required meta tags -->
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+      <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body>
+    <nav class="menu-lateral"><!-- nav -->
+        <div class="sidebaar expanded" id="sidebaar">
+            <a href=""></a>
+            <img class="logo" src="imagens/dogville.png" alt="Logo Dog ville" width="250">
+        </div>
+        <div class="btn-expandir">
+            <i class="bi bi-list" id="btn-exp"></i>
+        </div>
+            
+        <ul><!-- ul -->
+            <li class="item-menu ativo">
+                <a href="index.html">
+                    <span class="icon">
+                        <i class="bi bi-house"></i>
+                    </span>
+                    <span class="txt-link">Home</span>
+                </a>
+            </li>
+            <li class="item-menu">
+                <a href="hotel.html">
+                    <span class="icon">
+                        <i class="bi bi-building-fill"></i>
+                    </span>
+                    <span class="txt-link">Hotel</span>
+                </a>
+                </li>
+                <li class="item-menu">
+                    <a href="banho/tosa.html">
+                        <span class="icon">
+                            <i class="bi bi-gitlab"></i>
+                        </span>
+                        <span class="txt-link">Banho/Tosa</span>
+                    </a>
+                </li>
+                <li class="item-menu">
+                    <a href="Loja.html">
+                        <span class="icon">
+                            <i class="bi bi-shop"></i>
+                        </span>
+                        <span class="txt-link">Loja</span>
+                    </a>
+                </li>
+                <li class="item-menu">
+                    <a href="#">
+                        <span class="icon">
+                            <i class="bi bi-search"></i>
+                        </span>
+                        <span class="txt-link">
+                            
+                        <form class="form-inline">
+                            <input type="text" class="form-control" placeholder="Pesquisar">
+                            
+                        </form>
+                        
+                        </span>
+                    </a>
+                </li>
+            </ul><!-- /ul -->
+
+    </nav><!-- /nav -->
+
+    <main class="main">
+        <aside class="sidebar">
+            <section class="conteudo">
+
+                <div class="grid-topo">
+                    <!-- GRID TOPO -->
+
+                    <div id="carousel-controles" class="carousel slide" data-ride="carousel"><!--carousel-->
+                
+                        <div class="carousel-inner"> <!--inner-->
+
+                            <div class="carousel-item active">
+                                <img src="imagens/img-home.png" alt="" class="img-fluid">
+                            </div>
+
+                            <div class="carousel-item">
+                                <!--botao click-->
+                                <img src="imagens/Nossa Loja Fisica.png" alt="" class="img-fluid">
+                            </div>
+
+                            <div class="carousel-item">
+                                <img src="imagens/cuide.png" class="img-fluid">
+                            </div>
+
+                        </div> <!-- fim inner -->
+
+                            <!-- controles/setas -->
+                            <a href="#carousel-controles" class="carousel-control-prev" data-slide="prev">
+                            <span class="carousel-control-prev-icon"></span>
+                            </a>
+
+                            <a href="#carousel-controles" class="carousel-control-next" data-slide="next">
+                            <span class="carousel-control-next-icon"></span>
+                            </a>
+
+                    </div><!-- fim carousel-->
+
+                    <div class="item">
+                    <h2 class="display-4">Quem Somos</h2>
+
+                    <p>
+                        Com Mais 30 anos de Experiência no Universo Pet, atuo em diversas áreas, incluindo <strong>Adestramento canino</strong>, <strong>Banho e Tosa</strong>, além de oferecer serviços especializados em <strong>Creche</strong>, <strong>Canil</strong> e <strong>Pet Shop</strong>. Ao longo dessa trajetória, adquiri um vasto conhecimento em cuidados e bem-estar animal, sempre prezando por um atendimento de excelência e um ambiente seguro e acolhedor. Meu compromisso é proporcionar aos animais e seus tutores um atendimento completo, seja no aprendizado, na diversão ou nos cuidados diários.
+                    </p>
+
+                    <p>
+                        cuide do seu amigo conosco
+                                
+                        "seu caozinho com banho e tosa em dia!"
+                                
+                        "seta para abrir o whatssapweb da central banho"
+                    </p>                      
+
+                </div>
+
+                <!-- GRID BAIXO -->
+
+                <div class="grid-baixo">
+                  <div class="item">
+                    <img src="imagens/dicas.png" alt="" class="img-fluid ">
+                    <h3>cuidados com seu Pet </h3>
+
+                    <p>
+                        
+                       botao acesse aqui nosso instagram <a href="https://www.instagram.com/ville.dogpet/" target="_blank" class="externo"></a>
+                    </p>
+                  </div>
+
+                </div>
+
+          <div id="carousel-indicadores" class="carousel slide" data-ride="carousel"><!--carousel-->
+          
+            <!-- indicadores -->
+             <ol class="carousel-indicators">
+              <li class="active" data-target="#carousel-indicadores" data-slide-to="0"></li>
+
+              <li data-target="#carousel-indicadores" data-slide-to="1"></li>
+
+              <li data-target="#carousel-indicadores" data-slide-to="2"></li>
+             </ol>
+            
+
+            <div class="carousel-inner"> <!--inner-->
+
+              <div class="carousel-item active">
+                <img src="imagens/banho-tosa.png" class="img-fluid">
+              </div>
+
+              <div class="carousel-item">
+                <img src="imagens/Nosso Hotel pet.png" class="img-fluid">
+              </div>
+
+              <div class="carousel-item">
+                <img src="imagens/agende.png" class="img-fluid">
+              </div>
+
+            </div> <!-- fim inner -->
+
+            <!-- controles/setas -->
+             <a href="#carousel-indicadores" class="carousel-control-prev" data-slide="prev">
+              <span class="carousel-control-prev-icon"></span>
+             </a>
+
+             <a href="#carousel-indicadores" class="carousel-control-next" data-slide="next">
+              <span class="carousel-control-next-icon"></span>
+             </a>
+
+          </div><!-- fim carousel-->
+
+          <div class="item albuns">
+            <article class="mapa">
+                <!--PetShop-->
+                <h1>Loja Física</h1>
+                <div class="mapa-wrapper">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7777.838363725399!2d-38.37799750839284!3d-12.912915749588127!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7161792652c1e21%3A0xd1e3b7e76282db3b!2sDog%20Ville%20Pet%20Shop!5e0!3m2!1spt-BR!2sbr!4v1744070283750!5m2!1spt-BR!2sbr" width="250" height="200" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </article>
+
+            <article class="mapa">
+                    <!--Hotel Pet-->
+                <h1>Hotel Pet</h1>
+                <div class="mapa-wrapper">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7777.838363725399!2d-38.37799750839284!3d-12.912915749588127!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x71617195a14bda3%3A0x72477cd482dd6e2!2sDog%20Ville!5e0!3m2!1spt-BR!2sbr!4v1744070323416!5m2!1spt-BR!2sbr" width="250" height="200" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </article>
+          </div>
+
+            </section>
+        </aside>
+    </main>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <footer>
+        <p>
+            a empresa
+            suporte ao cliente
+            loja FISICA
+
+            politicas
+            termos e condi... 
+            trocas e devolu
+            privaci
+            cookis
+            
+            formas de pagament
+
+            icons 
+            insta 
+        </p>
+    </footer>
+
+    <script src="menu.js">
+
+    </script>
+
+    <!-- JavaScript (Opcional) -->
+    <!-- jQuery primeiro, depois Popper.js, depois Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+</body>
+</html>

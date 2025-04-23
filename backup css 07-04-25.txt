@@ -1,0 +1,227 @@
+CSS------------
+@import url('https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    
+}
+
+body{
+    height: 100vh;
+}
+
+/* menu lateral */
+
+nav.menu-lateral{
+    width: 60px; /* tamanho normal do menu */
+    height: 100%;
+    background-color: #30c993;
+    padding: 40px 0 40px 1%;
+    box-shadow: 3px 0 0 rgba(141, 140, 140, 0.849);
+
+    /* fixar no topo */
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow: hidden; /* letras aparecendo fora do menu, corrigido */
+    transition: .8s;
+    z-index: 1000;
+}
+
+
+.btn-expandir{
+    width: 100%;
+    padding-left: 10px;
+}
+
+.btn-expandir > i {
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+ul{
+    height: 100%;
+    list-style-type: none;
+}
+
+ul li.item-menu{
+    transition: .6s;
+}
+
+ul li.ativo{
+    background:rgba(141, 140, 140, 0.849) ;
+}
+
+ul li.item-menu:hover{
+    background: rgba(141, 140, 140, 0.849);
+}
+
+ul li.item-menu a {
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+    padding: 20px 4%;
+    display: flex;
+    margin-bottom: 25px;
+    line-height: 43px;
+}
+
+ul li.item-menu a .txt-link{ /* menu movimentado*/
+    margin-left: 40px;
+    transition: .5s;
+    opacity: 0;
+}
+
+nav.menu-lateral.expandir .txt-link { /* menu movimentado */
+    margin-left: 20px ;
+    opacity: 1;
+}
+
+ul li.item-menu a .icon > i{
+    font-size: 30px;
+    margin-left: 3px;
+}
+
+/* botao pesquisar */
+
+.form-inline {
+    opacity: 75%;
+    transition: 0.4s ease;
+    border-color: rgb(102, 233, 102);
+    box-shadow: 0 0 8px rgba(102, 233, 102, 0.4);
+}
+/* logo */
+
+.logo {
+    width: 50px; /* tamanho quando o menu esta fechado */
+    transition: width 0.8s ease;
+    display: block;
+    margin: 20px auto 30px auto;
+}
+
+nav.menu-lateral.expandir .logo {
+    width: 220px; /* tamanho quando o menu esta expandido */
+}
+
+/* main expandir/retrair */
+
+nav.menu-lateral.expandir{ /* animaçao barra lateral */
+    width: 300px;
+}
+
+
+.main{
+    margin-left: 48px; /* largura que retrai o main junto c/ menu */
+    padding: 20px;
+    transition: margin-left 0.9s ease;
+}
+
+nav.menu-lateral.expandir ~ main { /* largura que expande o main c/ menu*/
+    margin-left: 300px;
+    transition: margin-left 0.7s ease;
+}
+
+/* conteudo */
+
+.conteudo{
+    padding: 20px;
+}
+
+/* grid topo com 3 columns fixed */
+
+.grid-todo {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /*3 columns iguais*/
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+
+/* grid baixo responsivo com 2 columns */
+
+.grid-baixo {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 50px;
+}
+
+/* visu dos itens */
+.item {
+    border: 1px solid red;
+    padding: 180px;
+    text-align: center;
+    border-radius: 10px;
+    font-size: 1.1rem;
+}
+
+/* mapa */
+
+.item.albuns {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+    transition: all 0.7s ease;
+  }
+
+.mapa {
+    flex: 1;
+    border: 1px solid #ccc;
+    padding: 20px;
+    background-color: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.7s ease;
+}
+
+.mapa h1 {
+    margin-bottom: 10px;
+}
+
+.main, .mapa iframe {
+    will-change: margin-left, transform;
+}
+
+.mapa-wrapper {
+    width: 100%;
+    max-width: 250px;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.7s ease;
+}
+
+.mapa-wrapper iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    pointer-events: none;
+    transition: transform 0.7s ease;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+footer{
+    position: relative;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #313131;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    z-index: 9999;
+}
