@@ -22,6 +22,7 @@
   <!--[if lt IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
   <![endif]-->
+  <script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
   <nav class="menu-lateral" aria-label="Menu principal">
@@ -84,16 +85,40 @@
     </aside>
   </main>
 
-  <footer>
-    <p>
-      A empresa | Suporte ao cliente | Loja física <br>
-      Políticas | Termos e condições | Trocas e devoluções | Privacidade | Cookies <br>
-      Formas de pagamento | Redes sociais
-    </p>
+  <footer class="rodape">
+    <div class="rodape-grid">
+      <div>
+        <span class="caixa-clara"><img class="rodape-logo" src="imagens/dogville.png" alt="Dog Ville Pet Shop" style="margin:0"></span>
+        <p style="margin-top:14px">Mais de 30 anos cuidando de quem você ama: banho e tosa, hotel pet, adestramento, creche e loja.</p>
+      </div>
+      <div>
+        <h4>Navegue</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="tosa.html">Banho e Tosa</a></li>
+          <li><a href="hotel.html">Hotel Pet</a></li>
+          <li><a href="Loja.html">Loja</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Fale com a gente</h4>
+        <ul>
+          <li><a href="#" data-whats="Olá! Vim pelo site da Dog Ville."><i class="bi bi-whatsapp" aria-hidden="true"></i> WhatsApp</a></li>
+          <li><a href="https://www.instagram.com/ville.dogpet/" target="_blank" rel="noopener noreferrer"><i class="bi bi-instagram" aria-hidden="true"></i> Instagram</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Formas de pagamento</h4>
+        <span class="caixa-clara"><img src="imagens/formas-de-pagamento.webp" alt="Formas de pagamento aceitas" width="226" height="80" loading="lazy"></span>
+      </div>
+    </div>
+    <p class="rodape-copy">&copy; <span id="ano">2026</span> Dog Ville Pet Shop. Todos os direitos reservados.</p>
   </footer>
 
   <!-- Scripts -->
   <script src="menu.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/efeitos.js"></script>
   <script src="js/loja.js"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>

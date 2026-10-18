@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dog Ville Pet Shop</title>
+  <meta name="description" content="Hotel pet da Dog Ville: hospedagem com cuidado e carinho para o seu cão.">
+  <title>Hotel Pet - Dog Ville Pet Shop</title>
 
   <!-- Favicon -->
   <link rel="shortcut icon" href="imagens/favicon2.png" type="image/x-icon">
@@ -11,34 +12,26 @@
   <!-- CSS -->
   <link rel="stylesheet" href="normalize.css">
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css">
+  <link rel="stylesheet" href="app.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
   <!-- icons -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
   
   <!-- HTML5 shim for IE < 9 -->
   <!--[if lt IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
   <![endif]-->
-
-  <!-- Manifest -->
-  <link rel="manifest" href="/site.webmanifest">
+  <script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
-  <nav class="menu-lateral">
+  <nav class="menu-lateral" aria-label="Menu principal">
     <div class="sidebaar expanded" id="sidebaar">
       <a href="#"></a>
       <img class="logo" src="imagens/dogville.png" alt="Logo Dog ville" width="250">
     </div>
     <div class="btn-expandir">
-      <i class="bi bi-list" id="btn-exp"></i>
+      <i class="bi bi-list" id="btn-exp" role="button" tabindex="0" aria-label="Expandir menu" aria-expanded="false"></i>
     </div>
 
     <ul>
@@ -67,62 +60,76 @@
         </a>
       </li>
       <li class="item-menu">
-        <a href="#">
-            <span class="icon">
-                <i class="bi bi-search"></i>
-            </span>
-            <span class="txt-link">
-            <form class="form-inline">
-                <input type="text" class="form-control" placeholder="Pesquisar">
+        <div class="busca-menu">
+          <span class="icon"><i class="bi bi-search"></i></span>
+          <span class="txt-link">
+            <form class="form-inline" role="search">
+              <input type="search" class="form-control" placeholder="Pesquisar" aria-label="Pesquisar">
             </form>
-            </span>
-        </a>
-    </li>
+          </span>
+        </div>
+      </li>
     </ul>
   </nav>
 
   <main class="main">
     <aside class="sidebar">
       <section class="conteudo container">
-        <div class="grid-topo">
+        <h1 class="titulo-pagina">Hotel Pet</h1>
 
-            <div class="item">
-                <h1>topo</h1>
-            </div>
+        <div class="banner-pagina">
+          <img loading="lazy" src="imagens/Nosso Hotel pet.png" alt="Hotel Pet Dog Ville" class="img-fluid hide-mobile">
         </div>
 
-        <div class="grid-baixo">
-            <div class="item">
-                <h1>baixo</h1>
+        <p class="hotel-intro reveal">Seu pet bem cuidado enquanto você viaja ou trabalha. Fale com a gente para consultar vagas e valores.</p>
+        <p class="reveal"><a href="#" class="btn-verde" style="display:inline-block;text-decoration:none" data-whats="Olá! Gostaria de consultar vagas no Hotel Pet."><i class="bi bi-whatsapp" aria-hidden="true"></i> Consultar vagas no WhatsApp</a></p>
+
+        <div class="item albuns">
+          <article class="mapa">
+            <h2>Hotel Pet</h2>
+            <div class="mapa-wrapper">
+              <iframe title="Mapa do Hotel Pet Dog Ville" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7777.838363725399!2d-38.37799750839284!3d-12.912915749588127!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x71617195a14bda3%3A0x72477cd482dd6e2!2sDog%20Ville!5e0!3m2!1spt-BR!2sbr!4v1744078996302!5m2!1spt-BR!2sbr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
-          <div>
-            <img src="imagens/Nosso Hotel pet.png" class="img-fluid hide-mobile">
-          </div>
-
-            <div class="item albuns">
-  
-            <article class="mapa">
-              <h1>Banho e Tosa/Hotel Pet</h1>
-              <div class="mapa-wrapper">
-                  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7777.838363725399!2d-38.37799750839284!3d-12.912915749588127!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x71617195a14bda3%3A0x72477cd482dd6e2!2sDog%20Ville!5e0!3m2!1spt-BR!2sbr!4v1744078996302!5m2!1spt-BR!2sbr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-              </div>
-            </article>
+          </article>
         </div>
-
       </section>
     </aside>
   </main>
 
-  <footer>
-    <p>
-      A empresa | Suporte ao cliente | Loja física <br>
-      Políticas | Termos e condições | Trocas e devoluções | Privacidade | Cookies <br>
-      Formas de pagamento | Redes sociais
-    </p>
+  <footer class="rodape">
+    <div class="rodape-grid">
+      <div>
+        <span class="caixa-clara"><img class="rodape-logo" src="imagens/dogville.png" alt="Dog Ville Pet Shop" style="margin:0"></span>
+        <p style="margin-top:14px">Mais de 30 anos cuidando de quem você ama: banho e tosa, hotel pet, adestramento, creche e loja.</p>
+      </div>
+      <div>
+        <h4>Navegue</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="tosa.html">Banho e Tosa</a></li>
+          <li><a href="hotel.html">Hotel Pet</a></li>
+          <li><a href="Loja.html">Loja</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Fale com a gente</h4>
+        <ul>
+          <li><a href="#" data-whats="Olá! Vim pelo site da Dog Ville."><i class="bi bi-whatsapp" aria-hidden="true"></i> WhatsApp</a></li>
+          <li><a href="https://www.instagram.com/ville.dogpet/" target="_blank" rel="noopener noreferrer"><i class="bi bi-instagram" aria-hidden="true"></i> Instagram</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Formas de pagamento</h4>
+        <span class="caixa-clara"><img src="imagens/formas-de-pagamento.webp" alt="Formas de pagamento aceitas" width="226" height="80" loading="lazy"></span>
+      </div>
+    </div>
+    <p class="rodape-copy">&copy; <span id="ano">2026</span> Dog Ville Pet Shop. Todos os direitos reservados.</p>
   </footer>
 
   <!-- Scripts -->
   <script src="menu.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/efeitos.js"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>

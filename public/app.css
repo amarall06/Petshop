@@ -206,3 +206,546 @@ ul li.item-menu a:focus-visible,
   outline: 2px solid #fff;
   outline-offset: 2px;
 }
+
+/* =====================================================
+   HOME: topo (hero), serviços, galeria, WhatsApp, efeitos
+   ===================================================== */
+
+/* ---------- Hero ---------- */
+.hero {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 30px;
+  background: linear-gradient(135deg, #0f8a99 0%, #1e9a66 100%);
+  color: #fff;
+  border-radius: 16px;
+  padding: 40px;
+  margin-bottom: 30px;
+  overflow: hidden;
+}
+
+.hero-texto {
+  flex: 1 1 360px;
+}
+
+.hero-selo {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  margin-bottom: 14px;
+}
+
+.hero h1 {
+  font-weight: 800;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  line-height: 1.15;
+  margin-bottom: 12px;
+}
+
+.hero p {
+  font-size: 1.15rem;
+  margin-bottom: 24px;
+}
+
+.hero-botoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.btn-hero {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: 30px;
+  font-weight: 700;
+  text-decoration: none;
+  background: #fff;
+  color: #167a55;
+  border: 2px solid #fff;
+  transition: 0.3s;
+}
+
+.btn-hero:hover {
+  background: #e6f8f1;
+  color: #167a55;
+  text-decoration: none;
+  transform: translateY(-2px);
+}
+
+.btn-hero.contorno {
+  background: transparent;
+  color: #fff;
+}
+
+.btn-hero.contorno:hover {
+  background: #fff;
+  color: #167a55;
+}
+
+.hero-foto {
+  flex: 0 1 270px;
+}
+
+.hero-foto img {
+  width: 100%;
+  max-height: 340px;
+  object-fit: cover;
+  border-radius: 16px;
+  border: 4px solid #fff;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+/* ---------- Cartões de serviços ---------- */
+.servicos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 18px;
+  margin-bottom: 30px;
+}
+
+.servico-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 22px 16px;
+  text-align: center;
+  color: #333;
+  text-decoration: none;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.servico-card:hover {
+  color: #333;
+  text-decoration: none;
+  transform: translateY(-6px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.16);
+}
+
+.servico-card .icone {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 12px;
+  border-radius: 50%;
+  background: #e6f8f1;
+  color: #1f8f68;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+}
+
+.servico-card h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.servico-card p {
+  font-size: 0.9rem;
+  color: #666;
+  margin: 0;
+}
+
+/* ---------- Galeria "Nossos banhos" ---------- */
+.secao-titulo {
+  margin: 40px 0 6px;
+  font-weight: 700;
+}
+
+.galeria {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+  margin-bottom: 30px;
+}
+
+.galeria a {
+  position: relative;
+  display: block;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.galeria img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s;
+}
+
+.galeria a:hover img {
+  transform: scale(1.07);
+}
+
+.galeria .selo {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: #30c993;
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 12px;
+}
+
+/* ---------- Foto ampliada ---------- */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.88);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 20px;
+}
+
+.lightbox.aberto {
+  display: flex;
+}
+
+.lightbox img {
+  max-width: 92vw;
+  max-height: 90vh;
+  border-radius: 10px;
+}
+
+.lightbox-fechar {
+  position: absolute;
+  top: 14px;
+  right: 20px;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 40px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+/* ---------- Botão flutuante do WhatsApp ---------- */
+.whats-flutuante {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: #25d366;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+  z-index: 1100;
+}
+
+.whats-flutuante:hover {
+  color: #fff;
+  background: #1ebe5b;
+  text-decoration: none;
+}
+
+.whats-flutuante:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 3px;
+}
+
+/* ---------- Movimento (só para quem não pediu menos animação) ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  .js .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .js .reveal.visivel {
+    opacity: 1;
+    transform: none;
+  }
+
+  .whats-flutuante::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 3px solid #25d366;
+    animation: pulsar 2s ease-out infinite;
+  }
+
+  @keyframes pulsar {
+    0% { transform: scale(1); opacity: 0.8; }
+    100% { transform: scale(1.6); opacity: 0; }
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 28px 22px;
+  }
+}
+
+/* =====================================================
+   ESPAÇAMENTO E ACABAMENTO (menos branco, mais profissional)
+   ===================================================== */
+
+/* "Quem somos" + carrossel lado a lado.
+   Remove o padding:180px que o style.css aplicava ao .item deste bloco. */
+.grid-topo {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  gap: 30px;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.grid-topo .item {
+  padding: 0;
+  text-align: left;
+}
+
+.grid-topo .item h2.display-4 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.grid-topo .item p {
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+/* Carrosséis com cantos arredondados, como os demais cartões */
+.grid-topo .carousel,
+.destaques .carousel {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Dicas + carrossel de banners lado a lado */
+.destaques {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: center;
+  margin: 30px 0;
+}
+
+.destaques .grid-baixo {
+  display: block;
+  margin: 0;
+}
+
+.destaques .grid-baixo .item {
+  max-width: none;
+  padding: 1.2rem;
+}
+
+.destaques .grid-baixo .item img {
+  border-radius: 8px;
+  margin: 8px 0 12px;
+}
+
+/* Mapas maiores e lado a lado */
+.item.albuns {
+  margin-top: 30px;
+}
+
+.item.albuns .mapa {
+  flex: 1 1 380px;
+  max-width: 560px;
+}
+
+.mapa-wrapper {
+  max-width: 100%;
+  height: 280px;
+}
+
+.mapa h1,
+.mapa h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+/* Página do Hotel */
+.banner-pagina img {
+  width: 100%;
+  max-height: 420px;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.hotel-intro {
+  max-width: 760px;
+  margin-bottom: 20px;
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+/* ---------- Rodapé ---------- */
+footer.rodape {
+  margin-left: 60px;
+  width: auto;
+  margin-top: 40px;
+  padding: 40px 20px 16px;
+  text-align: left;
+  z-index: 1;
+  transition: margin-left 0.7s ease;
+}
+
+nav.menu-lateral.expandir ~ footer.rodape {
+  margin-left: 300px;
+}
+
+.rodape-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 30px;
+}
+
+.rodape h4 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 14px;
+}
+
+.rodape p,
+.rodape li {
+  font-size: 0.92rem;
+  color: #d0d0d0;
+  line-height: 1.6;
+}
+
+.rodape ul {
+  height: auto;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.rodape li {
+  margin-bottom: 8px;
+}
+
+.rodape a {
+  color: #d0d0d0;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.rodape a:hover {
+  color: #30c993;
+  text-decoration: none;
+}
+
+.rodape .caixa-clara {
+  display: inline-block;
+  background: #fff;
+  border-radius: 10px;
+  padding: 8px 14px;
+}
+
+.rodape .caixa-clara img {
+  display: block;
+  max-width: 100%;
+}
+
+.rodape-logo {
+  width: 170px;
+  margin-bottom: 14px;
+}
+
+.rodape-copy {
+  max-width: 1200px;
+  margin: 28px auto 0;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  text-align: center;
+  font-size: 0.85rem;
+  color: #aaa;
+}
+
+/* ---------- Celular ---------- */
+@media (max-width: 768px) {
+  .grid-topo,
+  .destaques {
+    grid-template-columns: 1fr;
+  }
+
+  /* as imagens dos banners já ficam ocultas no celular (hide-mobile);
+     aqui some também o carrossel vazio que sobrava em branco */
+  .grid-topo .carousel,
+  .destaques .carousel {
+    display: none;
+  }
+
+  .mapa-wrapper {
+    height: 220px;
+  }
+}
+
+/* =====================================================
+   PÁGINA DE AGENDAMENTO: imagem de fundo + cartão central
+   ===================================================== */
+.pagina-agendamento {
+  --opacidade-fundo: 0.4; /* 0 = some, 1 = imagem inteira. Ajuste aqui. */
+}
+
+.pagina-agendamento::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: url("imagens/banho-tosa-fundo.webp") center / cover no-repeat;
+  opacity: var(--opacidade-fundo);
+}
+
+/* centraliza o cartão na tela, na horizontal e na vertical */
+.pagina-agendamento .conteudo {
+  min-height: calc(100vh - 40px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pagina-agendamento .agendamento-wrap {
+  width: 100%;
+  justify-content: center;
+}
+
+.pagina-agendamento .agendamento-form {
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.93);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+}
+
+.pagina-agendamento .agendamento-form h1 {
+  font-size: 1.7rem;
+  text-align: center;
+  margin-top: 0;
+}
+
+.pagina-agendamento .agendamento-form .subtitulo-pagina {
+  text-align: center;
+}
+
+.pagina-agendamento .btn-verde {
+  width: 100%;
+}

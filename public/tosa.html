@@ -22,8 +22,9 @@
   <!--[if lt IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
   <![endif]-->
+  <script>document.documentElement.classList.add('js')</script>
 </head>
-<body>
+<body class="pagina-agendamento">
   <nav class="menu-lateral" aria-label="Menu principal">
     <div class="sidebaar expanded" id="sidebaar">
       <a href="#"></a>
@@ -74,11 +75,12 @@
   <main class="main">
     <aside class="sidebar">
       <section class="conteudo container">
-        <h1 class="titulo-pagina">Agende o banho e tosa do seu pet</h1>
-        <p class="subtitulo-pagina">Escolha o serviço, o dia e um horário livre. É rápido!</p>
-
         <div class="agendamento-wrap">
-          <form id="form-agendamento" class="agendamento-form" novalidate>
+          <div class="agendamento-form">
+            <h1 class="titulo-pagina">Agende o banho e tosa do seu pet</h1>
+            <p class="subtitulo-pagina">Escolha o serviço, o dia e um horário livre. É rápido!</p>
+
+            <form id="form-agendamento" novalidate>
             <div class="form-group">
               <label for="service_id">Serviço</label>
               <select id="service_id" name="service_id" class="form-control" required>
@@ -132,25 +134,46 @@
             <button type="submit" id="btn-agendar" class="btn-verde">Agendar</button>
             <div id="aviso-agendamento" class="aviso" role="status"></div>
           </form>
-
-          <div class="agendamento-foto hide-mobile">
-            <img loading="lazy" src="imagens/banho-tosa.png" alt="Banho e tosa Dog Ville" class="img-fluid">
           </div>
         </div>
       </section>
     </aside>
   </main>
 
-  <footer>
-    <p>
-      A empresa | Suporte ao cliente | Loja física <br>
-      Políticas | Termos e condições | Trocas e devoluções | Privacidade | Cookies <br>
-      Formas de pagamento | Redes sociais
-    </p>
+  <footer class="rodape">
+    <div class="rodape-grid">
+      <div>
+        <span class="caixa-clara"><img class="rodape-logo" src="imagens/dogville.png" alt="Dog Ville Pet Shop" style="margin:0"></span>
+        <p style="margin-top:14px">Mais de 30 anos cuidando de quem você ama: banho e tosa, hotel pet, adestramento, creche e loja.</p>
+      </div>
+      <div>
+        <h4>Navegue</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="tosa.html">Banho e Tosa</a></li>
+          <li><a href="hotel.html">Hotel Pet</a></li>
+          <li><a href="Loja.html">Loja</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Fale com a gente</h4>
+        <ul>
+          <li><a href="#" data-whats="Olá! Vim pelo site da Dog Ville."><i class="bi bi-whatsapp" aria-hidden="true"></i> WhatsApp</a></li>
+          <li><a href="https://www.instagram.com/ville.dogpet/" target="_blank" rel="noopener noreferrer"><i class="bi bi-instagram" aria-hidden="true"></i> Instagram</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Formas de pagamento</h4>
+        <span class="caixa-clara"><img src="imagens/formas-de-pagamento.webp" alt="Formas de pagamento aceitas" width="226" height="80" loading="lazy"></span>
+      </div>
+    </div>
+    <p class="rodape-copy">&copy; <span id="ano">2026</span> Dog Ville Pet Shop. Todos os direitos reservados.</p>
   </footer>
 
   <!-- Scripts -->
   <script src="menu.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/efeitos.js"></script>
   <script src="js/agendamento.js"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
