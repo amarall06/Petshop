@@ -1,0 +1,208 @@
+/* Estilos das páginas ligadas ao back end (Loja e Agendamento).
+   Usa a mesma cor verde do menu lateral (#30c993). */
+
+.titulo-pagina {
+  margin: 10px 0 20px;
+  font-weight: 700;
+}
+
+.subtitulo-pagina {
+  color: #555;
+  margin-bottom: 25px;
+}
+
+/* ---------- Loja ---------- */
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 25px;
+}
+
+.filtros button {
+  border: 2px solid #30c993;
+  background: #fff;
+  color: #1f8f68;
+  padding: 6px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: 0.3s;
+}
+
+.filtros button:hover,
+.filtros button.ativo {
+  background: #30c993;
+  color: #fff;
+}
+
+.produtos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.produto-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s;
+}
+
+.produto-card:hover {
+  transform: translateY(-4px);
+}
+
+.produto-card .foto {
+  height: 170px;
+  background: #f4f4f4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.produto-card .foto img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.produto-card .info {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+.produto-card h3 {
+  font-size: 1.05rem;
+  margin: 0;
+}
+
+.produto-card .desc {
+  font-size: 0.9rem;
+  color: #666;
+  flex: 1;
+}
+
+.produto-card .preco {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1f8f68;
+}
+
+.produto-card .estoque {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+.produto-card .estoque.acabando {
+  color: #c0392b;
+}
+
+/* ---------- Agendamento ---------- */
+.agendamento-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  align-items: flex-start;
+}
+
+.agendamento-form {
+  flex: 1 1 380px;
+  max-width: 560px;
+  background: #fff;
+  border-radius: 10px;
+  padding: 25px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.agendamento-form label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 4px;
+}
+
+.agendamento-foto {
+  flex: 1 1 300px;
+  max-width: 500px;
+}
+
+.btn-verde {
+  background: #30c993;
+  border: none;
+  color: #fff;
+  font-weight: 700;
+  padding: 10px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.btn-verde:hover:not(:disabled) {
+  background: #25a87b;
+}
+
+.btn-verde:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.aviso {
+  margin-top: 15px;
+  padding: 12px 15px;
+  border-radius: 8px;
+  display: none;
+}
+
+.aviso.ok {
+  display: block;
+  background: #e6f8f1;
+  color: #1f8f68;
+}
+
+.aviso.erro {
+  display: block;
+  background: #fdecea;
+  color: #c0392b;
+}
+
+/* ---------- Menu lateral: busca (era um <form> dentro de um <a>) ----------
+   Reproduz exatamente o visual que o link tinha em "ul li.item-menu a" */
+ul li.item-menu .busca-menu {
+  color: white;
+  text-decoration: none;
+  font-size: 20px;
+  padding: 20px 4%;
+  display: flex;
+  margin-bottom: 25px;
+  line-height: 43px;
+}
+
+ul li.item-menu .busca-menu .txt-link {
+  margin-left: 40px;
+  transition: .5s;
+  opacity: 0;
+}
+
+nav.menu-lateral.expandir .busca-menu .txt-link {
+  margin-left: 20px;
+  opacity: 1;
+}
+
+ul li.item-menu .busca-menu .icon > i {
+  font-size: 30px;
+  margin-left: 3px;
+}
+
+/* ---------- Acessibilidade: contorno só ao navegar pelo teclado ---------- */
+.btn-expandir > i:focus-visible,
+ul li.item-menu a:focus-visible,
+.busca-menu input:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
