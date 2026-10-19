@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Painel - Dog Ville Pet Shop</title>
+  <link rel="shortcut icon" href="imagens/favicon2.png" type="image/x-icon">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    body { background: #f4f6f5; font-family: "Bitter", Georgia, serif; }
+    .topo { background: #30c993; color: #fff; padding: 10px 20px; display: flex; align-items: center; justify-content: space-between; }
+    .topo img { height: 40px; }
+    .topo h1 { font-size: 1.1rem; margin: 0 0 0 14px; font-weight: 700; }
+    .topo .esq { display: flex; align-items: center; }
+    .abas { display: flex; flex-wrap: wrap; gap: 8px; margin: 22px 0 18px; }
+    .abas button { border: 2px solid #30c993; background: #fff; color: #1f8f68; padding: 8px 18px; border-radius: 22px; font-weight: 700; cursor: pointer; font-family: inherit; }
+    .abas button.ativa, .abas button:hover { background: #30c993; color: #fff; }
+    .cartao { background: #fff; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,.08); padding: 20px; margin-bottom: 20px; }
+    .btn-verde { background: #30c993; border: none; color: #fff; font-weight: 700; border-radius: 8px; padding: 8px 20px; cursor: pointer; font-family: inherit; }
+    .btn-verde:hover { background: #25a87b; color: #fff; }
+    .tabela-rolagem { overflow-x: auto; }
+    table td, table th { vertical-align: middle !important; font-size: .92rem; }
+    #aviso { position: fixed; top: 14px; left: 50%; transform: translateX(-50%); z-index: 3000; min-width: 260px; max-width: 90vw; display: none; box-shadow: 0 4px 16px rgba(0,0,0,.2); }
+    #tela-login { max-width: 380px; margin: 12vh auto 0; }
+    .vazio { color: #888; text-align: center; padding: 24px 0; }
+    .msg-contato { border-left: 4px solid #30c993; }
+  </style>
+</head>
+<body>
+
+<div id="aviso" class="alert" role="status"></div>
+
+<!-- ============ LOGIN ============ -->
+<div id="tela-login" class="container">
+  <div class="cartao">
+    <div class="text-center mb-3" style="background:#30c993;border-radius:10px;padding:8px">
+      <img src="imagens/dogville.png" alt="Dog Ville" style="max-width:180px">
+    </div>
+    <h2 class="h5 text-center mb-3">Painel administrativo</h2>
+    <form id="form-login" novalidate>
+      <div class="form-group">
+        <label for="usuario">Usuário</label>
+        <input id="usuario" class="form-control" autocomplete="username" required>
+      </div>
+      <div class="form-group">
+        <label for="senha">Senha</label>
+        <input id="senha" type="password" class="form-control" autocomplete="current-password" required>
+      </div>
+      <button type="submit" class="btn-verde btn-block">Entrar</button>
+    </form>
+  </div>
+</div>
+
+<!-- ============ PAINEL ============ -->
+<div id="tela-admin" style="display:none">
+  <header class="topo">
+    <div class="esq">
+      <img src="imagens/dogville.png" alt="Dog Ville">
+      <h1>Painel administrativo</h1>
+    </div>
+    <div>
+      <a href="index.html" class="btn btn-sm btn-light mr-2">Ver site</a>
+      <button id="btn-sair" class="btn btn-sm btn-outline-light">Sair</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="abas" role="tablist">
+      <button type="button" data-aba="agenda" class="ativa"><i class="bi bi-calendar-check"></i> Agenda</button>
+      <button type="button" data-aba="produtos"><i class="bi bi-bag"></i> Produtos</button>
+      <button type="button" data-aba="servicos"><i class="bi bi-tags"></i> Serviços</button>
+      <button type="button" data-aba="mensagens"><i class="bi bi-chat-dots"></i> Mensagens</button>
+    </div>
+
+    <!-- AGENDA -->
+    <section id="aba-agenda">
+      <div class="cartao">
+        <div class="form-row align-items-end">
+          <div class="form-group col-sm-4 col-md-3">
+            <label for="ag-data">Dia</label>
+            <input type="date" id="ag-data" class="form-control">
+          </div>
+          <div class="form-group col-sm-4 col-md-3">
+            <label for="ag-status">Situação</label>
+            <select id="ag-status" class="form-control">
+              <option value="">Todas</option>
+              <option value="agendado">Agendado</option>
+              <option value="concluido">Concluído</option>
+              <option value="cancelado">Cancelado</option>
+            </select>
+          </div>
+          <div class="form-group col-sm-4 col-md-6">
+            <button type="button" id="ag-ontem" class="btn btn-outline-secondary" aria-label="Dia anterior">&larr;</button>
+            <button type="button" id="ag-hoje" class="btn btn-outline-secondary">Hoje</button>
+            <button type="button" id="ag-amanha" class="btn btn-outline-secondary" aria-label="Próximo dia">&rarr;</button>
+            <button type="button" id="ag-todos" class="btn btn-outline-secondary">Todos os dias</button>
+          </div>
+        </div>
+      </div>
+      <div class="cartao">
+        <p id="ag-resumo" class="text-muted mb-2"></p>
+        <div class="tabela-rolagem">
+          <table class="table table-hover mb-0">
+            <thead><tr><th>Data</th><th>Hora</th><th>Tutor</th><th>Telefone</th><th>Pet</th><th>Serviço</th><th>Obs.</th><th>Situação</th><th>Ações</th></tr></thead>
+            <tbody id="ag-corpo"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRODUTOS -->
+    <section id="aba-produtos" style="display:none">
+      <div class="cartao">
+        <h2 class="h6 mb-3" id="pr-titulo-form">Novo produto</h2>
+        <form id="form-produto" novalidate>
+          <input type="hidden" id="pr-id">
+          <div class="form-row">
+            <div class="form-group col-md-6"><label for="pr-nome">Nome</label><input id="pr-nome" class="form-control" maxlength="200" required></div>
+            <div class="form-group col-md-3"><label for="pr-categoria">Categoria</label>
+              <input id="pr-categoria" class="form-control" list="lista-categorias" maxlength="50" required>
+              <datalist id="lista-categorias"><option value="racao"><option value="higiene"><option value="acessorios"><option value="saude"><option value="brinquedos"></datalist>
+            </div>
+            <div class="form-group col-md-3"><label for="pr-preco">Preço (R$)</label><input id="pr-preco" type="number" step="0.01" min="0" class="form-control" required></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-2"><label for="pr-estoque">Estoque</label><input id="pr-estoque" type="number" min="0" step="1" class="form-control" required></div>
+            <div class="form-group col-md-5"><label for="pr-imagem">Foto (caminho)</label><input id="pr-imagem" class="form-control" placeholder="imagens/nome-da-foto.png">
+              <small class="text-muted">Coloque a foto na pasta <code>imagens</code> do site e escreva o caminho aqui.</small></div>
+            <div class="form-group col-md-5"><label for="pr-descricao">Descrição</label><input id="pr-descricao" class="form-control" maxlength="300"></div>
+          </div>
+          <button type="submit" class="btn-verde" id="pr-salvar">Salvar produto</button>
+          <button type="button" class="btn btn-link" id="pr-cancelar" style="display:none">Cancelar edição</button>
+        </form>
+      </div>
+      <div class="cartao tabela-rolagem">
+        <table class="table table-hover mb-0">
+          <thead><tr><th>Produto</th><th>Categoria</th><th>Preço</th><th>Estoque</th><th>Ações</th></tr></thead>
+          <tbody id="pr-corpo"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- SERVIÇOS -->
+    <section id="aba-servicos" style="display:none">
+      <div class="cartao">
+        <h2 class="h6 mb-3" id="sv-titulo-form">Novo serviço</h2>
+        <form id="form-servico" novalidate>
+          <input type="hidden" id="sv-id">
+          <div class="form-row">
+            <div class="form-group col-md-6"><label for="sv-nome">Nome</label><input id="sv-nome" class="form-control" maxlength="100" required></div>
+            <div class="form-group col-md-3"><label for="sv-preco">Preço (R$)</label><input id="sv-preco" type="number" step="0.01" min="0" class="form-control" required></div>
+            <div class="form-group col-md-3"><label for="sv-duracao">Duração (min)</label><input id="sv-duracao" type="number" min="15" step="5" value="60" class="form-control" required></div>
+          </div>
+          <button type="submit" class="btn-verde">Salvar serviço</button>
+          <button type="button" class="btn btn-link" id="sv-cancelar" style="display:none">Cancelar edição</button>
+          <p class="text-muted small mt-2 mb-0">Estes são os serviços e preços que aparecem no formulário de agendamento. Os valores da página "Serviços" ficam em <code>js/dados-servicos.js</code>.</p>
+        </form>
+      </div>
+      <div class="cartao tabela-rolagem">
+        <table class="table table-hover mb-0">
+          <thead><tr><th>Serviço</th><th>Preço</th><th>Duração</th><th>Ações</th></tr></thead>
+          <tbody id="sv-corpo"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- MENSAGENS -->
+    <section id="aba-mensagens" style="display:none">
+      <div id="ms-lista"></div>
+    </section>
+  </main>
+</div>
+
+<script src="js/admin.js"></script>
+</body>
+</html>

@@ -22,7 +22,7 @@
   <!--[if lt IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
   <![endif]-->
-  <script>document.documentElement.classList.add('js')</script>
+  <script>document.documentElement.classList.add('js');setTimeout(function(){if(!document.documentElement.hasAttribute('data-efeitos'))document.documentElement.classList.remove('js')},2500)</script>
 </head>
 <body>
   <nav class="menu-lateral" aria-label="Menu principal">
@@ -39,6 +39,12 @@
         <a href="index.html">
           <span class="icon"><i class="bi bi-house"></i></span>
           <span class="txt-link">Home</span>
+        </a>
+      </li>
+      <li class="item-menu">
+        <a href="servicos.html">
+          <span class="icon"><i class="bi bi-tags"></i></span>
+          <span class="txt-link">Serviços</span>
         </a>
       </li>
       <li class="item-menu">
@@ -76,7 +82,7 @@
     <aside class="sidebar">
       <section class="conteudo container">
         <!-- Topo / chamada principal -->
-        <section class="hero reveal">
+        <section class="hero">
           <div class="hero-texto">
             <span class="hero-selo">+ de 30 anos de experiência</span>
             <h1>Cuidado completo para o seu pet</h1>
@@ -92,7 +98,7 @@
         </section>
 
         <!-- Atalhos para os serviços -->
-        <div class="servicos-grid reveal">
+        <div class="servicos-grid">
           <a href="tosa.html" class="servico-card">
             <div class="icone"><i class="bi bi-scissors" aria-hidden="true"></i></div>
             <h3>Banho e Tosa</h3>
@@ -115,7 +121,9 @@
           </a>
         </div>
 
-        <div class="grid-topo reveal">
+        <p class="ver-todos"><a href="servicos.html">Ver todos os serviços e valores &rarr;</a></p>
+
+        <div class="grid-topo">
           <div id="carousel-controles" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
               <div class="carousel-item active">
@@ -225,7 +233,7 @@
   <footer class="rodape">
     <div class="rodape-grid">
       <div>
-        <span class="caixa-clara"><img class="rodape-logo" src="imagens/dogville.png" alt="Dog Ville Pet Shop" style="margin:0"></span>
+        <span class="caixa-verde"><img class="rodape-logo" src="imagens/dogville.png" alt="Dog Ville Pet Shop" style="margin:0"></span>
         <p style="margin-top:14px">Mais de 30 anos cuidando de quem você ama: banho e tosa, hotel pet, adestramento, creche e loja.</p>
       </div>
       <div>

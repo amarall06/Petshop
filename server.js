@@ -104,11 +104,31 @@ function freeSlots(date) {
 }
 
 // ---------- Login do administrador ----------
+// Limite de tentativas erradas: 10 a cada 15 minutos por IP (protege contra quem tenta adivinhar a senha)
+const tentativas = new Map();
+const JANELA_MS = 15 * 60 * 1000;
+
+function bloqueado(ip) {
+  const t = tentativas.get(ip);
+  return t && t.ate > Date.now() && t.n >= 10;
+}
+function registrarFalha(ip) {
+  let t = tentativas.get(ip);
+  if (!t || t.ate <= Date.now()) t = { n: 0, ate: Date.now() + JANELA_MS };
+  t.n += 1;
+  tentativas.set(ip, t);
+}
+
 app.post('/api/auth/login', (req, res) => {
+  if (bloqueado(req.ip)) {
+    return res.status(429).json({ error: 'Muitas tentativas. Aguarde alguns minutos e tente de novo.' });
+  }
   const { username, password } = req.body || {};
   if (username !== ADMIN_USER || !bcrypt.compareSync(String(password || ''), ADMIN_HASH)) {
+    registrarFalha(req.ip);
     return res.status(401).json({ error: 'Usuário ou senha inválidos.' });
   }
+  tentativas.delete(req.ip);
   const token = jwt.sign({ role: 'admin' }, JWT_SECRET, { expiresIn: '8h' });
   res.json({ token });
 });
@@ -177,6 +197,17 @@ app.post('/api/services', auth, (req, res) => {
   const info = db.prepare('INSERT INTO services (name, price, duration_min) VALUES (?, ?, ?)')
     .run(name.trim(), Number(price), Number(duration_min));
   res.status(201).json(db.prepare('SELECT * FROM services WHERE id = ?').get(info.lastInsertRowid));
+});
+
+app.put('/api/services/:id', auth, (req, res) => {
+  const cur = db.prepare('SELECT * FROM services WHERE id = ?').get(req.params.id);
+  if (!cur) return res.status(404).json({ error: 'Serviço não encontrado.' });
+  const n = { ...cur, ...(req.body || {}) };
+  if (!isStr(n.name, 2) || !(Number(n.price) >= 0) || !(Number(n.duration_min) > 0))
+    return res.status(400).json({ error: 'Dados do serviço inválidos.' });
+  db.prepare('UPDATE services SET name = ?, price = ?, duration_min = ? WHERE id = ?')
+    .run(String(n.name).trim(), Number(n.price), Number(n.duration_min), cur.id);
+  res.json(db.prepare('SELECT * FROM services WHERE id = ?').get(cur.id));
 });
 
 app.delete('/api/services/:id', auth, (req, res) => {
@@ -255,5 +286,9 @@ app.use((err, _req, res, _next) => {
   console.error(err);
   res.status(500).json({ error: 'Erro interno do servidor.' });
 });
+
+if (ADMIN_PASSWORD === 'admin123' || !process.env.JWT_SECRET) {
+  console.warn('\n[ATENÇÃO] Defina ADMIN_PASSWORD e JWT_SECRET no arquivo .env antes de colocar o site no ar.\n');
+}
 
 app.listen(PORT, () => console.log(`Petshop rodando em http://localhost:${PORT}`));

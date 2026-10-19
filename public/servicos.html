@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Serviços da Dog Ville: banho e tosa, hotel pet, adestramento e creche. Veja valores e perguntas frequentes.">
+  <title>Serviços - Dog Ville Pet Shop</title>
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="imagens/favicon2.png" type="image/x-icon">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="normalize.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="app.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+  <!-- icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  
+  <!-- HTML5 shim for IE < 9 -->
+  <!--[if lt IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <![endif]-->
+  <script>document.documentElement.classList.add('js');setTimeout(function(){if(!document.documentElement.hasAttribute('data-efeitos'))document.documentElement.classList.remove('js')},2500)</script>
+</head>
+<body>
+  <nav class="menu-lateral" aria-label="Menu principal">
+    <div class="sidebaar expanded" id="sidebaar">
+      <a href="#"></a>
+      <img class="logo" src="imagens/dogville.png" alt="Logo Dog ville" width="250">
+    </div>
+    <div class="btn-expandir">
+      <i class="bi bi-list" id="btn-exp" role="button" tabindex="0" aria-label="Expandir menu" aria-expanded="false"></i>
+    </div>
+
+    <ul>
+      <li class="item-menu">
+        <a href="index.html">
+          <span class="icon"><i class="bi bi-house"></i></span>
+          <span class="txt-link">Home</span>
+        </a>
+      </li>
+      <li class="item-menu ativo">
+        <a href="servicos.html">
+          <span class="icon"><i class="bi bi-tags"></i></span>
+          <span class="txt-link">Serviços</span>
+        </a>
+      </li>
+      <li class="item-menu">
+        <a href="hotel.html">
+          <span class="icon"><i class="bi bi-building-fill"></i></span>
+          <span class="txt-link">Hotel</span>
+        </a>
+      </li>
+      <li class="item-menu">
+        <a href="tosa.html">
+          <span class="icon"><i class="bi bi-gitlab"></i></span>
+          <span class="txt-link">Banho/Tosa</span>
+        </a>
+      </li>
+      <li class="item-menu">
+        <a href="Loja.html">
+          <span class="icon"><i class="bi bi-shop"></i></span>
+          <span class="txt-link">Loja</span>
+        </a>
+      </li>
+      <li class="item-menu">
+        <div class="busca-menu">
+          <span class="icon"><i class="bi bi-search"></i></span>
+          <span class="txt-link">
+            <form class="form-inline" role="search">
+              <input type="search" class="form-control" placeholder="Pesquisar" aria-label="Pesquisar">
+            </form>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </nav>
+
+  <main class="main">
+    <aside class="sidebar">
+      <section class="conteudo container">
+        <h1 class="titulo-pagina">Nossos serviços</h1>
+        <p class="subtitulo-pagina">Conheça o que oferecemos. Para o banho e a tosa, você mesmo escolhe o dia e o horário.</p>
+
+        <div id="servicos-lista" class="servicos-precos"></div>
+
+        <section id="secao-depoimentos" hidden>
+          <h2 class="secao-titulo">O que dizem sobre a Dog Ville</h2>
+          <div id="depoimentos" class="depoimentos-grid"></div>
+        </section>
+
+        <h2 class="secao-titulo">Perguntas frequentes</h2>
+        <div id="faq" class="faq"></div>
+
+        <div class="cta-final">
+          <h2>Ficou com alguma dúvida?</h2>
+          <p>Agende o banho e tosa pelo site ou fale com a gente no WhatsApp.</p>
+          <div class="hero-botoes">
+            <a href="tosa.html" class="btn-hero"><i class="bi bi-calendar-check" aria-hidden="true"></i> Agendar banho e tosa</a>
+            <a href="#" class="btn-hero contorno" data-whats="Olá! Tenho uma dúvida sobre os serviços da Dog Ville."><i class="bi bi-whatsapp" aria-hidden="true"></i> Falar no WhatsApp</a>
+          </div>
+        </div>
+      </section>
+    </aside>
+  </main>
+
+  <footer class="rodape">
+    <div class="rodape-grid">
+      <div>
+        <span class="caixa-verde"><img class="rodape-logo" src="imagens/dogville.png" alt="Dog Ville Pet Shop" style="margin:0"></span>
+        <p style="margin-top:14px">Mais de 30 anos cuidando de quem você ama: banho e tosa, hotel pet, adestramento, creche e loja.</p>
+      </div>
+      <div>
+        <h4>Navegue</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="tosa.html">Banho e Tosa</a></li>
+          <li><a href="hotel.html">Hotel Pet</a></li>
+          <li><a href="Loja.html">Loja</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Fale com a gente</h4>
+        <ul>
+          <li><a href="#" data-whats="Olá! Vim pelo site da Dog Ville."><i class="bi bi-whatsapp" aria-hidden="true"></i> WhatsApp</a></li>
+          <li><a href="https://www.instagram.com/ville.dogpet/" target="_blank" rel="noopener noreferrer"><i class="bi bi-instagram" aria-hidden="true"></i> Instagram</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Formas de pagamento</h4>
+        <span class="caixa-clara"><img src="imagens/formas-de-pagamento.webp" alt="Formas de pagamento aceitas" width="226" height="80" loading="lazy"></span>
+      </div>
+    </div>
+    <p class="rodape-copy">&copy; <span id="ano">2026</span> Dog Ville Pet Shop. Todos os direitos reservados.</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="menu.js"></script>
+  <script src="js/dados-servicos.js"></script>
+  <script src="js/servicos.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/efeitos.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+</body>
+</html>
