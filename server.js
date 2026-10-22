@@ -1,4 +1,4 @@
-require('dotenv').config();
+const envLido = require('dotenv').config(); // lê o arquivo .env
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
@@ -76,6 +76,35 @@ if (db.prepare('SELECT COUNT(*) AS n FROM products').get().n === 0) {
   ins.run('Vermífugo e Medicamentos', 'saude', 39.9, 30, 'Consulte sempre um veterinário.', 'imagens/medicina.png');
 }
 
+db.exec(`
+CREATE TABLE IF NOT EXISTS customers (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL,
+  email TEXT NOT NULL UNIQUE COLLATE NOCASE,
+  phone TEXT NOT NULL,
+  password_hash TEXT NOT NULL,
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE IF NOT EXISTS orders (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  customer_id INTEGER REFERENCES customers(id) ON DELETE SET NULL,
+  customer_name TEXT NOT NULL,
+  customer_phone TEXT NOT NULL,
+  notes TEXT NOT NULL DEFAULT '',
+  total REAL NOT NULL,
+  status TEXT NOT NULL DEFAULT 'novo',
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE IF NOT EXISTS order_items (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  order_id INTEGER NOT NULL REFERENCES orders(id) ON DELETE CASCADE,
+  product_id INTEGER REFERENCES products(id) ON DELETE SET NULL,
+  name TEXT NOT NULL,
+  price REAL NOT NULL,
+  qty INTEGER NOT NULL CHECK (qty > 0)
+);
+`);
+
 // ---------- Utilidades ----------
 const app = express();
 app.use(cors());
@@ -85,15 +114,54 @@ const isStr = (v, min = 1, max = 200) => typeof v === 'string' && v.trim().lengt
 const isDate = (v) => /^\d{4}-\d{2}-\d{2}$/.test(v) && !Number.isNaN(Date.parse(v));
 const isId = (v) => Number.isInteger(Number(v)) && Number(v) > 0;
 
-function auth(req, res, next) {
+// Cada tipo de login tem o seu "papel" dentro do token. Um token de cliente NUNCA vale como admin.
+function lerToken(req) {
   const token = (req.headers.authorization || '').replace('Bearer ', '');
+  return jwt.verify(token, JWT_SECRET, { algorithms: ['HS256'] });
+}
+
+function auth(req, res, next) { // somente administrador
   try {
-    req.user = jwt.verify(token, JWT_SECRET);
+    const u = lerToken(req);
+    if (u.role !== 'admin') throw new Error('papel inválido');
+    req.user = u;
     next();
   } catch {
     res.status(401).json({ error: 'Não autorizado. Faça login.' });
   }
 }
+
+function authCliente(req, res, next) { // somente cliente com conta
+  try {
+    const u = lerToken(req);
+    if (u.role !== 'cliente') throw new Error('papel inválido');
+    const c = db.prepare('SELECT id, name, email, phone FROM customers WHERE id = ?').get(u.id);
+    if (!c) throw new Error('cliente não existe');
+    req.cliente = c;
+    next();
+  } catch {
+    res.status(401).json({ error: 'Faça login para continuar.' });
+  }
+}
+
+// Limite de tentativas por IP (login e cadastro de clientes)
+const limites = new Map();
+function contarTentativa(chave, max, janelaMs) { // devolve true se passou do limite
+  const agora = Date.now();
+  let t = limites.get(chave);
+  if (!t || t.ate <= agora) t = { n: 0, ate: agora + janelaMs };
+  t.n += 1;
+  limites.set(chave, t);
+  return t.n > max;
+}
+function limiteAtingido(chave, max) {
+  const t = limites.get(chave);
+  return !!t && t.ate > Date.now() && t.n >= max;
+}
+setInterval(() => {
+  const agora = Date.now();
+  for (const [k, t] of limites) if (t.ate <= agora) limites.delete(k);
+}, 30 * 60 * 1000).unref();
 
 function freeSlots(date) {
   const taken = db
@@ -123,7 +191,8 @@ app.post('/api/auth/login', (req, res) => {
   if (bloqueado(req.ip)) {
     return res.status(429).json({ error: 'Muitas tentativas. Aguarde alguns minutos e tente de novo.' });
   }
-  const { username, password } = req.body || {};
+  const { username: usuarioDigitado, password } = req.body || {};
+  const username = String(usuarioDigitado || '').trim();
   if (username !== ADMIN_USER || !bcrypt.compareSync(String(password || ''), ADMIN_HASH)) {
     registrarFalha(req.ip);
     return res.status(401).json({ error: 'Usuário ou senha inválidos.' });
@@ -278,6 +347,168 @@ app.get('/api/contact', auth, (_req, res) => {
   res.json(db.prepare('SELECT * FROM contacts ORDER BY created_at DESC').all());
 });
 
+// ---------- Clientes (cadastro e login) ----------
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const TEL_RE = /^[\d\s()+-]{8,20}$/;
+const HASH_FALSO = bcrypt.hashSync('senha-falsa-para-igualar-o-tempo', 10);
+const tokenCliente = (id) => jwt.sign({ role: 'cliente', id }, JWT_SECRET, { expiresIn: '30d' });
+
+app.post('/api/customers/register', (req, res) => {
+  if (contarTentativa(`cadastro:${req.ip}`, 10, 60 * 60 * 1000)) {
+    return res.status(429).json({ error: 'Muitos cadastros em pouco tempo. Tente de novo mais tarde.' });
+  }
+  const b = req.body || {};
+  const name = String(b.name || '').trim();
+  const email = String(b.email || '').trim().toLowerCase();
+  const phone = String(b.phone || '').trim();
+  const password = String(b.password || '');
+
+  if (name.length < 2 || name.length > 100) return res.status(400).json({ error: 'Informe seu nome.' });
+  if (!EMAIL_RE.test(email) || email.length > 150) return res.status(400).json({ error: 'E-mail inválido.' });
+  if (!TEL_RE.test(phone)) return res.status(400).json({ error: 'Telefone inválido. Use o número com DDD.' });
+  if (password.length < 8 || password.length > 72) return res.status(400).json({ error: 'A senha deve ter de 8 a 72 caracteres.' });
+  if (db.prepare('SELECT 1 FROM customers WHERE email = ?').get(email)) {
+    return res.status(409).json({ error: 'Este e-mail já tem cadastro. Faça login.' });
+  }
+
+  try {
+    const info = db.prepare('INSERT INTO customers (name, email, phone, password_hash) VALUES (?, ?, ?, ?)')
+      .run(name, email, phone, bcrypt.hashSync(password, 10));
+    res.status(201).json({ token: tokenCliente(Number(info.lastInsertRowid)), name });
+  } catch {
+    res.status(409).json({ error: 'Este e-mail já tem cadastro. Faça login.' });
+  }
+});
+
+app.post('/api/customers/login', (req, res) => {
+  const chave = `login-cliente:${req.ip}`;
+  if (limiteAtingido(chave, 10)) {
+    return res.status(429).json({ error: 'Muitas tentativas. Aguarde alguns minutos e tente de novo.' });
+  }
+  const b = req.body || {};
+  const c = db.prepare('SELECT * FROM customers WHERE email = ?').get(String(b.email || '').trim().toLowerCase());
+  const ok = bcrypt.compareSync(String(b.password || ''), c ? c.password_hash : HASH_FALSO); // mesmo tempo com ou sem e-mail
+  if (!c || !ok) {
+    contarTentativa(chave, 10, 15 * 60 * 1000);
+    return res.status(401).json({ error: 'E-mail ou senha incorretos.' });
+  }
+  limites.delete(chave);
+  res.json({ token: tokenCliente(c.id), name: c.name });
+});
+
+app.get('/api/customers/me', authCliente, (req, res) => res.json(req.cliente));
+
+app.put('/api/customers/me', authCliente, (req, res) => {
+  const name = String((req.body || {}).name ?? req.cliente.name).trim();
+  const phone = String((req.body || {}).phone ?? req.cliente.phone).trim();
+  if (name.length < 2 || name.length > 100) return res.status(400).json({ error: 'Informe seu nome.' });
+  if (!TEL_RE.test(phone)) return res.status(400).json({ error: 'Telefone inválido. Use o número com DDD.' });
+  db.prepare('UPDATE customers SET name = ?, phone = ? WHERE id = ?').run(name, phone, req.cliente.id);
+  res.json({ ...req.cliente, name, phone });
+});
+
+// ---------- Pedidos da loja ----------
+class ErroPedido extends Error {
+  constructor(status, mensagem) { super(mensagem); this.status = status; }
+}
+
+function pedidosComItens(where = '', params = []) {
+  const pedidos = db.prepare(`SELECT * FROM orders ${where} ORDER BY id DESC`).all(...params);
+  const itens = db.prepare('SELECT product_id, name, price, qty FROM order_items WHERE order_id = ?');
+  return pedidos.map((o) => ({ ...o, items: itens.all(o.id) }));
+}
+
+// O servidor refaz TODAS as contas com os preços do banco: nunca confia no total enviado pelo navegador.
+app.post('/api/orders', authCliente, (req, res) => {
+  const b = req.body || {};
+  const lista = Array.isArray(b.items) ? b.items : [];
+  if (!lista.length || lista.length > 50) return res.status(400).json({ error: 'Seu carrinho está vazio.' });
+
+  const quantidades = new Map();
+  for (const it of lista) {
+    const id = Number(it && it.product_id);
+    const qty = Number(it && it.qty);
+    if (!Number.isInteger(id) || id <= 0 || !Number.isInteger(qty) || qty < 1 || qty > 99) {
+      return res.status(400).json({ error: 'Item inválido no carrinho.' });
+    }
+    quantidades.set(id, (quantidades.get(id) || 0) + qty);
+  }
+  const notes = String(b.notes || '').trim().slice(0, 500);
+
+  try {
+    const pedido = db.transaction(() => {
+      const buscar = db.prepare('SELECT * FROM products WHERE id = ?');
+      const linhas = [];
+      let centavos = 0;
+      for (const [id, qty] of quantidades) {
+        const p = buscar.get(id);
+        if (!p) throw new ErroPedido(409, 'Um dos produtos do carrinho não está mais disponível.');
+        if (p.stock < qty) {
+          throw new ErroPedido(409, p.stock === 0 ? `"${p.name}" está sem estoque.` : `Só temos ${p.stock} unidade(s) de "${p.name}".`);
+        }
+        centavos += Math.round(p.price * 100) * qty;
+        linhas.push({ p, qty });
+      }
+      const total = centavos / 100;
+      const info = db.prepare('INSERT INTO orders (customer_id, customer_name, customer_phone, notes, total) VALUES (?, ?, ?, ?, ?)')
+        .run(req.cliente.id, req.cliente.name, req.cliente.phone, notes, total);
+      const orderId = Number(info.lastInsertRowid);
+      const inserir = db.prepare('INSERT INTO order_items (order_id, product_id, name, price, qty) VALUES (?, ?, ?, ?, ?)');
+      const baixar = db.prepare('UPDATE products SET stock = stock - ? WHERE id = ?');
+      for (const { p, qty } of linhas) {
+        inserir.run(orderId, p.id, p.name, p.price, qty);
+        baixar.run(qty, p.id);
+      }
+      return {
+        id: orderId, total, notes, status: 'novo',
+        items: linhas.map(({ p, qty }) => ({ product_id: p.id, name: p.name, price: p.price, qty })),
+      };
+    })();
+    res.status(201).json(pedido);
+  } catch (e) {
+    if (e instanceof ErroPedido) return res.status(e.status).json({ error: e.message });
+    throw e;
+  }
+});
+
+app.get('/api/orders/mine', authCliente, (req, res) => {
+  res.json(pedidosComItens('WHERE customer_id = ?', [req.cliente.id]));
+});
+
+// ---------- Administração: pedidos e clientes ----------
+app.get('/api/admin/orders', auth, (req, res) => {
+  const status = req.query.status;
+  res.json(status ? pedidosComItens('WHERE status = ?', [status]) : pedidosComItens());
+});
+
+app.patch('/api/admin/orders/:id/status', auth, (req, res) => {
+  const { status } = req.body || {};
+  if (!['novo', 'confirmado', 'entregue', 'cancelado'].includes(status)) {
+    return res.status(400).json({ error: 'Situação inválida.' });
+  }
+  const resultado = db.transaction(() => {
+    const o = db.prepare('SELECT * FROM orders WHERE id = ?').get(req.params.id);
+    if (!o) return { codigo: 404, erro: 'Pedido não encontrado.' };
+    if (o.status === 'cancelado') return { codigo: 409, erro: 'Um pedido cancelado não pode ser alterado.' };
+    if (status === 'cancelado') { // devolve os produtos ao estoque
+      const devolver = db.prepare('UPDATE products SET stock = stock + ? WHERE id = ?');
+      for (const it of db.prepare('SELECT product_id, qty FROM order_items WHERE order_id = ?').all(o.id)) {
+        if (it.product_id) devolver.run(it.qty, it.product_id);
+      }
+    }
+    db.prepare('UPDATE orders SET status = ? WHERE id = ?').run(status, o.id);
+    return { ok: { id: o.id, status } };
+  })();
+  if (resultado.erro) return res.status(resultado.codigo).json({ error: resultado.erro });
+  res.json(resultado.ok);
+});
+
+app.get('/api/admin/customers', auth, (_req, res) => {
+  res.json(db.prepare(`SELECT c.id, c.name, c.email, c.phone, c.created_at,
+      (SELECT COUNT(*) FROM orders o WHERE o.customer_id = c.id) AS pedidos
+      FROM customers c ORDER BY c.id DESC`).all());
+});
+
 // ---------- Front-end estático e tratamento de erros ----------
 app.use(express.static(path.join(__dirname, 'public'))); // coloque seu site na pasta "public"
 
@@ -287,8 +518,13 @@ app.use((err, _req, res, _next) => {
   res.status(500).json({ error: 'Erro interno do servidor.' });
 });
 
-if (ADMIN_PASSWORD === 'admin123' || !process.env.JWT_SECRET) {
-  console.warn('\n[ATENÇÃO] Defina ADMIN_PASSWORD e JWT_SECRET no arquivo .env antes de colocar o site no ar.\n');
+if (envLido.error) {
+  console.warn('\n[ATENÇÃO] Arquivo .env NÃO encontrado. Usando login padrão: usuário "admin" e senha "admin123".');
+  console.warn('          Crie o arquivo .env na mesma pasta do server.js (veja o .env.example).\n');
+} else {
+  console.log(`Arquivo .env carregado. Usuário do painel: "${ADMIN_USER}" (senha com ${ADMIN_PASSWORD.length} caracteres).`);
+  if (ADMIN_PASSWORD === 'admin123') console.warn('[ATENÇÃO] A senha ainda é a padrão. Troque ADMIN_PASSWORD no .env antes de colocar o site no ar.');
+  if (!process.env.JWT_SECRET) console.warn('[ATENÇÃO] Defina JWT_SECRET no .env antes de colocar o site no ar.');
 }
 
 app.listen(PORT, () => console.log(`Petshop rodando em http://localhost:${PORT}`));

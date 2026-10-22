@@ -1,0 +1,64 @@
+DOG VILLE PET SHOP - COMO USAR ESTE PROJETO
+============================================
+
+ESTRUTURA
+---------
+server.js ............ o servidor (back end: agendamentos, produtos, login do painel)
+package.json ......... lista das bibliotecas que o servidor usa
+.env.example ......... modelo do arquivo de senhas (veja "PRIMEIRA VEZ")
+iniciar-site.bat ..... dois cliques para ligar o site e abrir no navegador
+public/ .............. TODO o site que o visitante enxerga (páginas, estilos, imagens)
+   index, servicos, tosa, hotel, Loja ... páginas do site
+   entrar, conta, carrinho ............... cadastro/login, minha conta e carrinho de compras
+   admin.html ............................ painel da loja (não tem link no site)
+   js/ ............... scripts das páginas
+   imagens/ .......... só as imagens que o site usa
+ferramentas/ ......... testes de diagnóstico (testar-env.js e testar-login.js)
+arquivos-originais/ .. imagens e anotações antigas, guardadas e fora do site
+
+
+PRIMEIRA VEZ
+------------
+1. Instale o Node.js (versão LTS) em nodejs.org.
+2. Copie o arquivo ".env.example" e renomeie a CÓPIA para ".env"
+   (se o Windows reclamar, digite ".env." com um ponto no final).
+   Abra o .env no Bloco de Notas e troque:
+      ADMIN_PASSWORD  -> a senha do painel
+      JWT_SECRET      -> uma frase longa e aleatória
+   O arquivo .env fica AO LADO do server.js. Nunca dentro de "public".
+3. Dê dois cliques em "iniciar-site.bat".
+   (ou, no Prompt de Comando, dentro desta pasta: npm install  e depois  npm start)
+4. O site abre em http://localhost:3000
+   O painel fica em http://localhost:3000/admin.html
+
+O site só funciona enquanto a janela preta estiver aberta.
+Se mudar o .env, feche a janela preta e ligue de novo.
+
+
+CLIENTES, CARRINHO E PEDIDOS
+----------------------------
+- O cliente cria uma conta (entrar.html), monta o carrinho na Loja e finaliza o pedido.
+- O pedido fica salvo no banco, o estoque diminui, e o cliente envia o resumo pelo
+  WhatsApp da loja. Pagamento e entrega são combinados por lá (não há pagamento online).
+- No painel (admin.html) a aba "Pedidos" mostra tudo: Confirmar, Marcar como entregue
+  ou Cancelar (cancelar devolve os produtos ao estoque). A aba "Clientes" lista as contas.
+- Ainda NÃO existe "esqueci minha senha" (o site não envia e-mails).
+
+
+ONDE MUDAR CADA COISA
+---------------------
+Número do WhatsApp ................ public/js/config.js
+Preços, perguntas e depoimentos ... public/js/dados-servicos.js
+Cores e estilos antigos ........... public/style.css
+Estilos novos ..................... public/app.css
+Produtos e serviços do agendamento  pelo painel (admin.html)
+
+
+ANTES DE COLOCAR NO AR
+----------------------
+- Troque ADMIN_PASSWORD e JWT_SECRET no .env.
+- Nunca envie o .env para o GitHub (o .gitignore já impede).
+- Hospede em um serviço que guarde o arquivo petshop.db (banco de dados).
+- Use HTTPS (endereço começando com https://). Hoje há senhas de clientes circulando:
+  sem HTTPS elas podem ser interceptadas. As hospedagens como Render e Railway já dão HTTPS.
+- Avise os clientes sobre o uso dos dados (LGPD): vale criar uma página de Política de Privacidade.

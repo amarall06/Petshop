@@ -72,7 +72,7 @@
       e.preventDefault();
       const r = await api('/api/auth/login', {
         method: 'POST',
-        body: JSON.stringify({ username: $('#usuario').value, password: $('#senha').value }),
+        body: JSON.stringify({ username: $('#usuario').value.trim(), password: $('#senha').value }),
       });
       token = r.token;
       sessionStorage.setItem(CHAVE, token);
@@ -86,10 +86,10 @@
   // ---------- Abas ----------
   function abrirAba(nome) {
     document.querySelectorAll('.abas button').forEach((b) => b.classList.toggle('ativa', b.dataset.aba === nome));
-    ['agenda', 'produtos', 'servicos', 'mensagens'].forEach((a) => {
+    ['agenda', 'pedidos', 'produtos', 'servicos', 'clientes', 'mensagens'].forEach((a) => {
       $(`#aba-${a}`).style.display = a === nome ? 'block' : 'none';
     });
-    const carregar = { agenda: carregarAgenda, produtos: carregarProdutos, servicos: carregarServicos, mensagens: carregarMensagens }[nome];
+    const carregar = { agenda: carregarAgenda, pedidos: carregarPedidos, produtos: carregarProdutos, servicos: carregarServicos, clientes: carregarClientes, mensagens: carregarMensagens }[nome];
     tentar(carregar)();
   }
   document.querySelectorAll('.abas button').forEach((b) => b.addEventListener('click', () => abrirAba(b.dataset.aba)));
@@ -161,6 +161,84 @@
   $('#ag-ontem').addEventListener('click', () => { $('#ag-data').value = somarDias($('#ag-data').value || hojeISO(), -1); tentar(carregarAgenda)(); });
   $('#ag-amanha').addEventListener('click', () => { $('#ag-data').value = somarDias($('#ag-data').value || hojeISO(), 1); tentar(carregarAgenda)(); });
   $('#ag-todos').addEventListener('click', () => { $('#ag-data').value = ''; tentar(carregarAgenda)(); });
+
+  // =====================================================
+  // PEDIDOS DA LOJA
+  // =====================================================
+  const ST_PED = {
+    novo: ['badge-warning', 'Aguardando confirmação'],
+    confirmado: ['badge-info', 'Confirmado'],
+    entregue: ['badge-success', 'Entregue'],
+    cancelado: ['badge-secondary', 'Cancelado'],
+  };
+  const dataHora = (s) => {
+    const d = new Date(String(s).replace(' ', 'T') + 'Z'); // o banco guarda em UTC
+    return isNaN(d) ? String(s) : d.toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' });
+  };
+
+  async function carregarPedidos() {
+    const st = $('#pd-status').value;
+    const lista = await api('/api/admin/orders' + (st ? `?status=${encodeURIComponent(st)}` : ''));
+    $('#pd-lista').innerHTML = lista.length
+      ? lista
+          .map((p) => {
+            const [cls, rotulo] = ST_PED[p.status] || ['badge-light', p.status];
+            const itens = p.items
+              .map((i) => `<tr><td>${i.qty}x ${esc(i.name)}</td><td class="text-right">${brl(i.price * i.qty)}</td></tr>`)
+              .join('');
+            const acoes =
+              p.status === 'novo'
+                ? `<button class="btn btn-sm btn-success" data-ped="${p.id}" data-st="confirmado">Confirmar pedido</button>
+                   <button class="btn btn-sm btn-outline-danger" data-ped="${p.id}" data-st="cancelado">Cancelar</button>`
+                : p.status === 'confirmado'
+                ? `<button class="btn btn-sm btn-success" data-ped="${p.id}" data-st="entregue">Marcar como entregue</button>
+                   <button class="btn btn-sm btn-outline-danger" data-ped="${p.id}" data-st="cancelado">Cancelar</button>`
+                : '';
+            return `<div class="cartao">
+              <div class="d-flex justify-content-between flex-wrap">
+                <strong>Pedido nº ${p.id} <span class="badge ${cls} ml-2">${esc(rotulo)}</span></strong>
+                <small class="text-muted">${esc(dataHora(p.created_at))}</small>
+              </div>
+              <div class="my-2">${esc(p.customer_name)} &middot;
+                <a href="${linkZap(p.customer_phone)}" target="_blank" rel="noopener noreferrer">${esc(p.customer_phone)}</a></div>
+              <table class="table table-sm mb-2"><tbody>${itens}
+                <tr><td><strong>Total</strong></td><td class="text-right"><strong>${brl(p.total)}</strong></td></tr></tbody></table>
+              ${p.notes ? `<p class="mb-2"><em>Obs. do cliente:</em> ${esc(p.notes)}</p>` : ''}
+              <div>${acoes}</div></div>`;
+          })
+          .join('')
+      : '<div class="cartao vazio">Nenhum pedido encontrado.</div>';
+  }
+
+  $('#pd-status').addEventListener('change', tentar(carregarPedidos));
+
+  $('#pd-lista').addEventListener(
+    'click',
+    tentar(async (e) => {
+      const b = e.target.closest('button[data-ped]');
+      if (!b) return;
+      if (b.dataset.st === 'cancelado' && !confirm(`Cancelar o pedido nº ${b.dataset.ped}? Os produtos voltam ao estoque e o pedido não poderá ser reaberto.`)) return;
+      await api(`/api/admin/orders/${b.dataset.ped}/status`, { method: 'PATCH', body: JSON.stringify({ status: b.dataset.st }) });
+      aviso('Pedido atualizado.');
+      await carregarPedidos();
+    })
+  );
+
+  // =====================================================
+  // CLIENTES CADASTRADOS
+  // =====================================================
+  async function carregarClientes() {
+    const lista = await api('/api/admin/customers');
+    $('#cl-corpo').innerHTML = lista.length
+      ? lista
+          .map(
+            (c) => `<tr><td>${esc(c.name)}</td><td><a href="mailto:${esc(c.email)}">${esc(c.email)}</a></td>
+              <td><a href="${linkZap(c.phone)}" target="_blank" rel="noopener noreferrer">${esc(c.phone)}</a></td>
+              <td>${c.pedidos}</td><td>${esc(dataHora(c.created_at))}</td></tr>`
+          )
+          .join('')
+      : '<tr><td colspan="5" class="vazio">Nenhum cliente cadastrado ainda.</td></tr>';
+  }
 
   // =====================================================
   // PRODUTOS

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Revise os produtos e finalize o seu pedido na Dog Ville.">
+  <meta name="robots" content="noindex">
+  <title>Carrinho - Dog Ville Pet Shop</title>
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="imagens/favicon2.png" type="image/x-icon">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="normalize.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="app.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+  <!-- icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  
+  <!-- HTML5 shim for IE < 9 -->
+  <!--[if lt IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <![endif]-->
+  <script>document.documentElement.classList.add('js');setTimeout(function(){if(!document.documentElement.hasAttribute('data-efeitos'))document.documentElement.classList.remove('js')},2500)</script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a href="index.html" class="topbar-logo"><img src="imagens/dogville.png" alt="Dog Ville Pet Shop" width="132" height="44"></a>
+      <button type="button" class="topbar-toggle" id="btn-menu" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu-topo">
+        <span></span><span></span><span></span>
+        <b class="badge-carrinho" data-carrinho-qtd hidden>0</b>
+      </button>
+      <nav id="menu-topo" class="topbar-menu" aria-label="Menu principal">
+        <ul class="topbar-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="servicos.html">Serviços</a></li>
+          <li><a href="hotel.html">Hotel</a></li>
+          <li><a href="tosa.html">Banho/Tosa</a></li>
+          <li><a href="Loja.html">Loja</a></li>
+        </ul>
+        <div class="topbar-conta">
+          <a href="entrar.html" data-conta-link><i class="bi bi-person-circle" aria-hidden="true"></i> <span data-conta-nome>Entrar</span></a>
+          <a href="carrinho.html"><i class="bi bi-cart3" aria-hidden="true"></i> Carrinho <b class="badge-carrinho" data-carrinho-qtd hidden>0</b></a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main">
+    <section class="conteudo container">
+      <h1 class="titulo-pagina">Carrinho</h1>
+
+      <div id="carrinho-vazio" class="vazio-bloco" hidden>
+        <p>Seu carrinho está vazio.</p>
+        <a href="Loja.html" class="btn-verde" style="display:inline-block;text-decoration:none">Ver a loja</a>
+      </div>
+
+      <div id="carrinho-conteudo" class="carrinho-grid" hidden>
+        <div id="itens"></div>
+        <aside class="carrinho-resumo">
+          <h2>Resumo do pedido</h2>
+          <div class="linha-resumo"><span>Itens</span><span id="res-itens">0</span></div>
+          <div class="linha-resumo total"><span>Total</span><span id="res-total">R$ 0,00</span></div>
+          <div class="campo" style="margin-top:14px">
+            <label for="obs">Observações (opcional)</label>
+            <textarea id="obs" rows="2" maxlength="500" placeholder="Ex.: prefiro retirar na loja"></textarea>
+          </div>
+          <p class="nota-pagto">O pagamento e a entrega são combinados com a loja pelo WhatsApp, depois que você enviar o pedido.</p>
+          <div id="bloco-login" class="bloco-login" hidden>
+            Para finalizar, entre na sua conta ou crie uma. Seu carrinho fica guardado.
+            <div class="botoes">
+              <a href="entrar.html?voltar=carrinho.html" class="btn-contorno">Entrar</a>
+              <a href="entrar.html?voltar=carrinho.html&amp;aba=cadastro" class="btn-contorno">Criar conta</a>
+            </div>
+          </div>
+          <button type="button" id="btn-finalizar" class="btn-verde">Finalizar pedido</button>
+          <div id="aviso-carrinho" class="aviso" role="alert"></div>
+        </aside>
+      </div>
+
+      <div id="pedido-ok" class="cartao-ok" hidden>
+        <div class="check" aria-hidden="true">&#10003;</div>
+        <h2>Pedido nº <span id="ok-numero"></span> registrado!</h2>
+        <p>Total: <strong id="ok-total"></strong></p>
+        <p>Falta só um passo: envie o pedido pelo WhatsApp para a loja confirmar o pagamento e a entrega.</p>
+        <a id="ok-whats" class="btn-whats" href="#" target="_blank" rel="noopener noreferrer">Enviar pedido pelo WhatsApp</a>
+        <p><a href="conta.html" class="link-whats">Ver meus pedidos</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="rodape">
+    <div class="rodape-grid">
+      <div>
+        <span class="caixa-verde"><img class="rodape-logo" src="imagens/dogville.png" alt="Dog Ville Pet Shop" style="margin:0"></span>
+        <p style="margin-top:14px">Mais de 30 anos cuidando de quem você ama: banho e tosa, hotel pet, adestramento, creche e loja.</p>
+      </div>
+      <div>
+        <h4>Navegue</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="servicos.html">Serviços</a></li>
+          <li><a href="tosa.html">Banho e Tosa</a></li>
+          <li><a href="hotel.html">Hotel Pet</a></li>
+          <li><a href="Loja.html">Loja</a></li>
+          <li><a href="entrar.html" data-conta-link>Minha conta</a></li>
+          <li><a href="carrinho.html">Carrinho</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Fale com a gente</h4>
+        <ul>
+          <li><a href="#" data-whats="Olá! Vim pelo site da Dog Ville."><i class="bi bi-whatsapp" aria-hidden="true"></i> WhatsApp</a></li>
+          <li><a href="https://www.instagram.com/ville.dogpet/" target="_blank" rel="noopener noreferrer"><i class="bi bi-instagram" aria-hidden="true"></i> Instagram</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Formas de pagamento</h4>
+        <span class="caixa-clara"><img src="imagens/formas-de-pagamento.webp" alt="Formas de pagamento aceitas" width="226" height="80" loading="lazy"></span>
+      </div>
+    </div>
+    <p class="rodape-copy">&copy; <span id="ano">2026</span> Dog Ville Pet Shop. Todos os direitos reservados.</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/sessao.js"></script>
+  <script src="menu.js"></script>
+  <script src="js/carrinho.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/efeitos.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+</body>
+</html>

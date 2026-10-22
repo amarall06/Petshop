@@ -1,26 +1,20 @@
-// Ativar item do menu lateral
-const menuItem = document.querySelectorAll('.item-menu');
+// Menu do topo. No celular só aparece o botão de 3 traços, que abre e fecha o menu.
+(function () {
+  const botao = document.getElementById('btn-menu');
+  const menu = document.getElementById('menu-topo');
+  if (!botao || !menu) return;
 
-function selectLink() {
-    menuItem.forEach((item) =>
-        item.classList.remove('ativo')
-    );
-    this.classList.add('ativo');
-}
+  function abrir(sim) {
+    menu.classList.toggle('aberto', sim);
+    botao.setAttribute('aria-expanded', String(sim));
+    botao.setAttribute('aria-label', sim ? 'Fechar menu' : 'Abrir menu');
+  }
 
-menuItem.forEach((item) =>
-    item.addEventListener('click', selectLink)
-);
-
-// Expandir e retrair menu lateral
-const btnExp = document.querySelector('#btn-exp');
-const menuSide = document.querySelector('.menu-lateral');
-const mainContent = document.querySelector('main'); // Se quiser que o <main> se mova junto
-
-btnExp.addEventListener('click', () => {
-    menuSide.classList.toggle('expandir');
-
-    // Se o main estiver se ajustando no CSS baseado no estado da nav,
-    // isso já é suficiente. Mas você pode forçar uma classe se preferir:
-    // mainContent.classList.toggle('expandido');
-});
+  botao.addEventListener('click', () => abrir(!menu.classList.contains('aberto')));
+  menu.addEventListener('click', (e) => { if (e.target.closest('a')) abrir(false); });   // escolheu uma opção: fecha
+  document.addEventListener('click', (e) => {                                            // clicou fora: fecha
+    if (menu.classList.contains('aberto') && !e.target.closest('.topbar')) abrir(false);
+  });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') abrir(false); });
+  window.addEventListener('resize', () => { if (window.innerWidth > 900) abrir(false); });
+})();

@@ -69,8 +69,10 @@
   <main class="container">
     <div class="abas" role="tablist">
       <button type="button" data-aba="agenda" class="ativa"><i class="bi bi-calendar-check"></i> Agenda</button>
+      <button type="button" data-aba="pedidos"><i class="bi bi-receipt"></i> Pedidos</button>
       <button type="button" data-aba="produtos"><i class="bi bi-bag"></i> Produtos</button>
       <button type="button" data-aba="servicos"><i class="bi bi-tags"></i> Serviços</button>
+      <button type="button" data-aba="clientes"><i class="bi bi-people"></i> Clientes</button>
       <button type="button" data-aba="mensagens"><i class="bi bi-chat-dots"></i> Mensagens</button>
     </div>
 
@@ -107,6 +109,36 @@
             <tbody id="ag-corpo"></tbody>
           </table>
         </div>
+      </div>
+    </section>
+
+    <!-- PEDIDOS DA LOJA -->
+    <section id="aba-pedidos" style="display:none">
+      <div class="cartao">
+        <div class="form-row align-items-end">
+          <div class="form-group col-md-4 mb-2">
+            <label for="pd-status">Situação</label>
+            <select id="pd-status" class="form-control">
+              <option value="">Todos</option>
+              <option value="novo">Aguardando confirmação</option>
+              <option value="confirmado">Confirmados</option>
+              <option value="entregue">Entregues</option>
+              <option value="cancelado">Cancelados</option>
+            </select>
+          </div>
+        </div>
+        <p class="text-muted small mb-0">O estoque já diminui quando o cliente faz o pedido. Se você cancelar, os produtos voltam ao estoque. Um pedido cancelado não pode ser reaberto.</p>
+      </div>
+      <div id="pd-lista"></div>
+    </section>
+
+    <!-- CLIENTES -->
+    <section id="aba-clientes" style="display:none">
+      <div class="cartao tabela-rolagem">
+        <table class="table table-hover mb-0">
+          <thead><tr><th>Nome</th><th>E-mail</th><th>Telefone</th><th>Pedidos</th><th>Cliente desde</th></tr></thead>
+          <tbody id="cl-corpo"></tbody>
+        </table>
       </div>
     </section>
 

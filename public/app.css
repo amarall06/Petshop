@@ -171,42 +171,6 @@
   color: #c0392b;
 }
 
-/* ---------- Menu lateral: busca (era um <form> dentro de um <a>) ----------
-   Reproduz exatamente o visual que o link tinha em "ul li.item-menu a" */
-ul li.item-menu .busca-menu {
-  color: white;
-  text-decoration: none;
-  font-size: 20px;
-  padding: 20px 4%;
-  display: flex;
-  margin-bottom: 25px;
-  line-height: 43px;
-}
-
-ul li.item-menu .busca-menu .txt-link {
-  margin-left: 40px;
-  transition: .5s;
-  opacity: 0;
-}
-
-nav.menu-lateral.expandir .busca-menu .txt-link {
-  margin-left: 20px;
-  opacity: 1;
-}
-
-ul li.item-menu .busca-menu .icon > i {
-  font-size: 30px;
-  margin-left: 3px;
-}
-
-/* ---------- Acessibilidade: contorno só ao navegar pelo teclado ---------- */
-.btn-expandir > i:focus-visible,
-ul li.item-menu a:focus-visible,
-.busca-menu input:focus-visible {
-  outline: 2px solid #fff;
-  outline-offset: 2px;
-}
-
 /* =====================================================
    HOME: topo (hero), serviços, galeria, WhatsApp, efeitos
    ===================================================== */
@@ -596,17 +560,11 @@ ul li.item-menu a:focus-visible,
 
 /* ---------- Rodapé ---------- */
 footer.rodape {
-  margin-left: 60px;
-  width: auto;
+  width: 100%;
   margin-top: 40px;
   padding: 40px 20px 16px;
   text-align: left;
   z-index: 1;
-  transition: margin-left 0.7s ease;
-}
-
-nav.menu-lateral.expandir ~ footer.rodape {
-  margin-left: 300px;
 }
 
 .rodape-grid {
@@ -717,7 +675,7 @@ nav.menu-lateral.expandir ~ footer.rodape {
 
 /* centraliza o cartão na tela, na horizontal e na vertical */
 .pagina-agendamento .conteudo {
-  min-height: calc(100vh - 40px);
+  min-height: calc(100vh - var(--altura-topo) - 40px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -974,4 +932,715 @@ a.btn-verde:hover {
 .ver-todos a {
   font-weight: 700;
   color: #1f8f68;
+}
+
+
+/* =====================================================
+   MENU NO TOPO (substitui a barra lateral)
+   ===================================================== */
+:root {
+  --altura-topo: 64px;
+}
+
+html {
+  scroll-padding-top: calc(var(--altura-topo) + 12px);
+}
+
+/* A página rola normalmente (antes o "body" tinha altura fixa e rolava por dentro) */
+body {
+  height: auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding-top: var(--altura-topo);
+}
+
+body > main.main {
+  flex: 1 0 auto;
+  margin-left: 0;
+  padding: 20px;
+}
+
+body > footer {
+  flex-shrink: 0;
+}
+
+.topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--altura-topo);
+  background: #30c993;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+  z-index: 1200;
+}
+
+.topbar-inner {
+  max-width: 1200px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.topbar-logo {
+  flex-shrink: 0;
+  display: block;
+}
+
+.topbar-logo img {
+  height: 44px;
+  width: auto;
+  display: block;
+}
+
+.topbar-menu {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.topbar-links,
+.topbar-conta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  height: auto;
+}
+
+.topbar-links {
+  margin-left: 20px;
+}
+
+.topbar-links a,
+.topbar-conta a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 22px;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1rem;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.25s;
+}
+
+.topbar-links a:hover,
+.topbar-conta a:hover,
+.topbar-links a.ativo {
+  background: rgba(0, 0, 0, 0.16);
+  color: #fff;
+  text-decoration: none;
+}
+
+.topbar a:focus-visible,
+.topbar-toggle:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+.badge-carrinho {
+  background: #fff;
+  color: #167a55;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 10px;
+  font-size: 0.75rem;
+  line-height: 20px;
+  text-align: center;
+  font-weight: 700;
+}
+
+.badge-carrinho[hidden] {
+  display: none;
+}
+
+/* Botão de 3 traços: só aparece no celular */
+.topbar-toggle {
+  display: none;
+  position: relative;
+  width: 46px;
+  height: 46px;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  padding: 0;
+}
+
+.topbar-toggle span {
+  display: block;
+  width: 26px;
+  height: 3px;
+  margin: 5px auto;
+  background: #fff;
+  border-radius: 2px;
+  transition: transform 0.3s, opacity 0.3s;
+}
+
+.topbar-toggle[aria-expanded="true"] span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.topbar-toggle[aria-expanded="true"] span:nth-child(2) {
+  opacity: 0;
+}
+
+.topbar-toggle[aria-expanded="true"] span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+.topbar-toggle .badge-carrinho {
+  position: absolute;
+  top: 2px;
+  right: -2px;
+  min-width: 18px;
+  height: 18px;
+  line-height: 18px;
+  padding: 0 4px;
+  font-size: 0.7rem;
+}
+
+@media (max-width: 900px) {
+  .topbar-toggle {
+    display: block;
+  }
+
+  .topbar-menu {
+    position: fixed;
+    top: var(--altura-topo);
+    left: 0;
+    right: 0;
+    max-height: calc(100vh - var(--altura-topo));
+    overflow-y: auto;
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 8px 16px 20px;
+    background: #30c993;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+  }
+
+  .topbar-menu.aberto {
+    display: flex;
+  }
+
+  .topbar-links,
+  .topbar-conta {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 2px;
+    margin: 0;
+  }
+
+  .topbar-conta {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.35);
+  }
+
+  .topbar-links a,
+  .topbar-conta a {
+    padding: 14px 12px;
+    font-size: 1.1rem;
+    border-radius: 10px;
+  }
+}
+
+/* ---------- Avisos rápidos (ex.: "Adicionado ao carrinho") ---------- */
+.toast-dv {
+  position: fixed;
+  left: 50%;
+  bottom: 90px;
+  transform: translate(-50%, 20px);
+  background: #2b2b2b;
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 24px;
+  font-size: 0.95rem;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s, transform 0.3s;
+  z-index: 3000;
+  max-width: 90vw;
+  text-align: center;
+}
+
+.toast-dv.visivel {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+/* ---------- Campos de formulário (não dependem do Bootstrap) ---------- */
+.campo {
+  margin-bottom: 14px;
+}
+
+.campo label {
+  display: block;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 4px;
+}
+
+.campo input,
+.campo textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #cfd8d4;
+  border-radius: 8px;
+  font: inherit;
+  background: #fff;
+}
+
+.campo input:focus,
+.campo textarea:focus {
+  outline: 2px solid #30c993;
+  border-color: #30c993;
+}
+
+.campo input[readonly] {
+  background: #f1f4f3;
+  color: #666;
+}
+
+.campo-check {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 0.85rem;
+  color: #555;
+  margin-bottom: 16px;
+}
+
+.campo-check input {
+  margin-top: 3px;
+}
+
+.dica {
+  font-size: 0.8rem;
+  color: #777;
+  margin-top: 3px;
+}
+
+/* ---------- Entrar / Criar conta ---------- */
+.pagina-centro {
+  min-height: calc(100vh - var(--altura-topo) - 120px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 440px;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+  padding: 26px;
+}
+
+.auth-abas {
+  display: flex;
+  gap: 6px;
+  background: #eef3f1;
+  padding: 5px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.auth-abas button {
+  flex: 1;
+  border: 0;
+  background: none;
+  padding: 10px;
+  border-radius: 9px;
+  font: inherit;
+  font-weight: 700;
+  color: #555;
+  cursor: pointer;
+}
+
+.auth-abas button[aria-selected="true"] {
+  background: #30c993;
+  color: #fff;
+}
+
+.auth-card .btn-verde {
+  width: 100%;
+  padding: 12px;
+}
+
+.auth-card h1 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.auth-card .sub {
+  color: #666;
+  margin-bottom: 18px;
+}
+
+/* ---------- Minha conta ---------- */
+.conta-grid {
+  display: grid;
+  grid-template-columns: minmax(260px, 340px) 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.painel {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 22px;
+  margin-bottom: 20px;
+}
+
+.painel h2 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+.pedido-card {
+  border: 1px solid #e3ebe7;
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 12px;
+}
+
+.pedido-topo {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.pedido-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 8px;
+  height: auto;
+}
+
+.pedido-card li {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 0.92rem;
+  padding: 3px 0;
+}
+
+.selo-status {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  background: #e8eefc;
+  color: #2a4ea3;
+}
+
+.selo-status.confirmado { background: #e1f5ec; color: #17734f; }
+.selo-status.entregue { background: #d9f2d9; color: #1e6b1e; }
+.selo-status.cancelado { background: #eee; color: #666; }
+
+.link-whats {
+  color: #167a55;
+  font-weight: 700;
+}
+
+/* ---------- Carrinho ---------- */
+.carrinho-grid {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 24px;
+  align-items: start;
+}
+
+.item-carrinho {
+  display: grid;
+  grid-template-columns: 80px 1fr auto;
+  gap: 14px;
+  align-items: center;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  padding: 12px;
+  margin-bottom: 12px;
+}
+
+.item-carrinho .miniatura {
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+  background: #f4f4f4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.item-carrinho .miniatura img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.item-carrinho h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0 0 2px;
+}
+
+.item-carrinho .unit {
+  font-size: 0.85rem;
+  color: #777;
+}
+
+.qtd-controle {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid #cfd8d4;
+  border-radius: 20px;
+  margin-top: 8px;
+}
+
+.qtd-controle button {
+  width: 34px;
+  height: 34px;
+  border: 0;
+  background: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #1f8f68;
+  font-weight: 700;
+}
+
+.qtd-controle button:disabled {
+  color: #bbb;
+  cursor: not-allowed;
+}
+
+.qtd-controle span {
+  min-width: 28px;
+  text-align: center;
+  font-weight: 700;
+}
+
+.item-carrinho .direita {
+  text-align: right;
+}
+
+.item-carrinho .subtotal {
+  font-weight: 700;
+  color: #1f8f68;
+  font-size: 1.05rem;
+}
+
+.btn-remover {
+  background: none;
+  border: 0;
+  color: #b33;
+  font-size: 0.85rem;
+  cursor: pointer;
+  margin-top: 8px;
+  text-decoration: underline;
+  font-family: inherit;
+}
+
+.carrinho-resumo {
+  position: sticky;
+  top: calc(var(--altura-topo) + 16px);
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 22px;
+}
+
+.carrinho-resumo h2 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+.linha-resumo {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+}
+
+.linha-resumo.total {
+  border-top: 1px solid #e3ebe7;
+  margin-top: 8px;
+  padding-top: 12px;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.nota-pagto {
+  font-size: 0.85rem;
+  color: #666;
+  background: #f1f7f4;
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin: 12px 0;
+}
+
+.carrinho-resumo .btn-verde {
+  width: 100%;
+  padding: 12px;
+}
+
+.bloco-login {
+  background: #fff8e6;
+  border: 1px solid #f0dca8;
+  border-radius: 8px;
+  padding: 12px;
+  margin: 12px 0;
+  font-size: 0.9rem;
+}
+
+.bloco-login .botoes {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.bloco-login .botoes a {
+  flex: 1;
+}
+
+.btn-contorno {
+  display: inline-block;
+  text-align: center;
+  border: 2px solid #30c993;
+  color: #167a55;
+  background: #fff;
+  font-weight: 700;
+  padding: 8px 14px;
+  border-radius: 8px;
+  text-decoration: none;
+}
+
+.btn-contorno:hover {
+  background: #e6f8f1;
+  color: #167a55;
+  text-decoration: none;
+}
+
+.cartao-ok {
+  max-width: 560px;
+  margin: 20px auto;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+  padding: 30px 26px;
+  text-align: center;
+}
+
+.cartao-ok .check {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 12px;
+  border-radius: 50%;
+  background: #e6f8f1;
+  color: #1f8f68;
+  font-size: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cartao-ok .btn-whats {
+  display: inline-block;
+  background: #25d366;
+  color: #fff;
+  font-weight: 700;
+  padding: 14px 26px;
+  border-radius: 30px;
+  text-decoration: none;
+  margin: 14px 0 8px;
+}
+
+.cartao-ok .btn-whats:hover {
+  background: #1ebe5b;
+  color: #fff;
+  text-decoration: none;
+}
+
+.vazio-bloco {
+  text-align: center;
+  padding: 50px 20px;
+  color: #666;
+}
+
+.vazio-bloco .btn-verde {
+  margin-top: 14px;
+}
+
+/* ---------- Loja: busca e botão do carrinho ---------- */
+.loja-busca {
+  max-width: 420px;
+  margin-bottom: 14px;
+}
+
+.btn-add {
+  width: 100%;
+  margin-top: 8px;
+  padding: 9px 12px;
+}
+
+.btn-add:disabled {
+  background: #b7c4be;
+  cursor: not-allowed;
+}
+
+@media (max-width: 900px) {
+  .conta-grid,
+  .carrinho-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .carrinho-resumo {
+    position: static;
+    margin-bottom: 76px; /* espaço para o botão flutuante do WhatsApp não cobrir o botão Finalizar */
+  }
+
+  .item-carrinho {
+    grid-template-columns: 64px 1fr;
+  }
+
+  .item-carrinho .miniatura {
+    width: 64px;
+    height: 64px;
+  }
+
+  .item-carrinho .direita {
+    grid-column: 1 / -1;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .item-carrinho .direita .btn-remover {
+    margin-top: 0;
+  }
 }

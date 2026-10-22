@@ -25,58 +25,28 @@
   <script>document.documentElement.classList.add('js');setTimeout(function(){if(!document.documentElement.hasAttribute('data-efeitos'))document.documentElement.classList.remove('js')},2500)</script>
 </head>
 <body>
-  <nav class="menu-lateral" aria-label="Menu principal">
-    <div class="sidebaar expanded" id="sidebaar">
-      <a href="#"></a>
-      <img class="logo" src="imagens/dogville.png" alt="Logo Dog ville" width="250">
-    </div>
-    <div class="btn-expandir">
-      <i class="bi bi-list" id="btn-exp" role="button" tabindex="0" aria-label="Expandir menu" aria-expanded="false"></i>
-    </div>
-
-    <ul>
-      <li class="item-menu ativo">
-        <a href="index.html">
-          <span class="icon"><i class="bi bi-house"></i></span>
-          <span class="txt-link">Home</span>
-        </a>
-      </li>
-      <li class="item-menu">
-        <a href="servicos.html">
-          <span class="icon"><i class="bi bi-tags"></i></span>
-          <span class="txt-link">Serviços</span>
-        </a>
-      </li>
-      <li class="item-menu">
-        <a href="hotel.html">
-          <span class="icon"><i class="bi bi-building-fill"></i></span>
-          <span class="txt-link">Hotel</span>
-        </a>
-      </li>
-      <li class="item-menu">
-        <a href="tosa.html">
-          <span class="icon"><i class="bi bi-gitlab"></i></span>
-          <span class="txt-link">Banho/Tosa</span>
-        </a>
-      </li>
-      <li class="item-menu">
-        <a href="Loja.html">
-          <span class="icon"><i class="bi bi-shop"></i></span>
-          <span class="txt-link">Loja</span>
-        </a>
-      </li>
-      <li class="item-menu">
-        <div class="busca-menu">
-          <span class="icon"><i class="bi bi-search"></i></span>
-          <span class="txt-link">
-            <form class="form-inline" role="search">
-              <input type="search" class="form-control" placeholder="Pesquisar" aria-label="Pesquisar">
-            </form>
-          </span>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a href="index.html" class="topbar-logo"><img src="imagens/dogville.png" alt="Dog Ville Pet Shop" width="132" height="44"></a>
+      <button type="button" class="topbar-toggle" id="btn-menu" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu-topo">
+        <span></span><span></span><span></span>
+        <b class="badge-carrinho" data-carrinho-qtd hidden>0</b>
+      </button>
+      <nav id="menu-topo" class="topbar-menu" aria-label="Menu principal">
+        <ul class="topbar-links">
+          <li><a href="index.html" class="ativo" aria-current="page">Home</a></li>
+          <li><a href="servicos.html">Serviços</a></li>
+          <li><a href="hotel.html">Hotel</a></li>
+          <li><a href="tosa.html">Banho/Tosa</a></li>
+          <li><a href="Loja.html">Loja</a></li>
+        </ul>
+        <div class="topbar-conta">
+          <a href="entrar.html" data-conta-link><i class="bi bi-person-circle" aria-hidden="true"></i> <span data-conta-nome>Entrar</span></a>
+          <a href="carrinho.html"><i class="bi bi-cart3" aria-hidden="true"></i> Carrinho <b class="badge-carrinho" data-carrinho-qtd hidden>0</b></a>
         </div>
-      </li>
-    </ul>
-  </nav>
+      </nav>
+    </div>
+  </header>
 
   <main class="main">
     <aside class="sidebar">
@@ -93,7 +63,7 @@
             </div>
           </div>
           <div class="hero-foto hide-mobile">
-            <img src="imagens/banho%205.png" alt="Yorkshire depois do banho e tosa na Dog Ville" width="553" height="740">
+            <img src="imagens/banho-5.png" alt="Yorkshire depois do banho e tosa na Dog Ville" width="553" height="740">
           </div>
         </section>
 
@@ -130,7 +100,7 @@
                 <img alt="Dog Ville Pet Shop: cuidado completo para o seu pet" src="imagens/img-home.png" class="img-fluid hide-mobile">
               </div>
               <div class="carousel-item">
-                <img loading="lazy" alt="Fachada da loja física Dog Ville" src="imagens/Nossa Loja Fisica.png" class="img-fluid hide-mobile">
+                <img loading="lazy" alt="Fachada da loja física Dog Ville" src="imagens/nossa-loja-fisica.png" class="img-fluid hide-mobile">
               </div>
               <div class="carousel-item">
                 <img loading="lazy" alt="Cuide do seu pet com a Dog Ville" src="imagens/cuide.png" class="img-fluid hide-mobile">
@@ -181,7 +151,7 @@
               <img loading="lazy" alt="Serviço de banho e tosa" src="imagens/banho-tosa.png" class="img-fluid hide-mobile">
             </div>
             <div class="carousel-item">
-              <img loading="lazy" alt="Hotel Pet Dog Ville" src="imagens/Nosso Hotel pet.png" class="img-fluid hide-mobile">
+              <img loading="lazy" alt="Hotel Pet Dog Ville" src="imagens/nosso-hotel-pet.png" class="img-fluid hide-mobile">
             </div>
             <div class="carousel-item">
               <img loading="lazy" alt="Agende o seu horário" src="imagens/agende.png" class="img-fluid hide-mobile">
@@ -202,13 +172,13 @@
         <h2 class="secao-titulo reveal">Nossos banhos</h2>
         <p class="subtitulo-pagina reveal">Quem passa por aqui sai assim. Clique para ampliar.</p>
         <div class="galeria reveal">
-          <a href="imagens/banho%202.png" data-lightbox><span class="selo">Antes e depois</span><img src="imagens/banho%202.png" alt="Antes e depois de um banho e tosa na Dog Ville" width="408" height="685" loading="lazy"></a>
-          <a href="imagens/banho%201.png" data-lightbox><img src="imagens/banho%201.png" alt="Cachorro depois do banho e tosa" width="407" height="616" loading="lazy"></a>
-          <a href="imagens/banho%203.png" data-lightbox><img src="imagens/banho%203.png" alt="Golden retriever depois do banho" width="406" height="670" loading="lazy"></a>
-          <a href="imagens/banho%204.png" data-lightbox><img src="imagens/banho%204.png" alt="Lhasa apso com laços depois da tosa" width="528" height="728" loading="lazy"></a>
-          <a href="imagens/banho%205.png" data-lightbox><img src="imagens/banho%205.png" alt="Yorkshire depois do banho e tosa" width="553" height="740" loading="lazy"></a>
-          <a href="imagens/banho%206.png" data-lightbox><img src="imagens/banho%206.png" alt="Spitz alemão com gravata depois do banho" width="460" height="572" loading="lazy"></a>
-          <a href="imagens/banho%207.png" data-lightbox><img src="imagens/banho%207.png" alt="Shih tzu com laço depois da tosa" width="452" height="567" loading="lazy"></a>
+          <a href="imagens/banho-2.png" data-lightbox><span class="selo">Antes e depois</span><img src="imagens/banho-2.png" alt="Antes e depois de um banho e tosa na Dog Ville" width="408" height="685" loading="lazy"></a>
+          <a href="imagens/banho-1.png" data-lightbox><img src="imagens/banho-1.png" alt="Cachorro depois do banho e tosa" width="407" height="616" loading="lazy"></a>
+          <a href="imagens/banho-3.png" data-lightbox><img src="imagens/banho-3.png" alt="Golden retriever depois do banho" width="406" height="670" loading="lazy"></a>
+          <a href="imagens/banho-4.png" data-lightbox><img src="imagens/banho-4.png" alt="Lhasa apso com laços depois da tosa" width="528" height="728" loading="lazy"></a>
+          <a href="imagens/banho-5.png" data-lightbox><img src="imagens/banho-5.png" alt="Yorkshire depois do banho e tosa" width="553" height="740" loading="lazy"></a>
+          <a href="imagens/banho-6.png" data-lightbox><img src="imagens/banho-6.png" alt="Spitz alemão com gravata depois do banho" width="460" height="572" loading="lazy"></a>
+          <a href="imagens/banho-7.png" data-lightbox><img src="imagens/banho-7.png" alt="Shih tzu com laço depois da tosa" width="452" height="567" loading="lazy"></a>
         </div>
 
         <div class="item albuns reveal">
@@ -240,9 +210,12 @@
         <h4>Navegue</h4>
         <ul>
           <li><a href="index.html">Home</a></li>
+          <li><a href="servicos.html">Serviços</a></li>
           <li><a href="tosa.html">Banho e Tosa</a></li>
           <li><a href="hotel.html">Hotel Pet</a></li>
           <li><a href="Loja.html">Loja</a></li>
+          <li><a href="entrar.html" data-conta-link>Minha conta</a></li>
+          <li><a href="carrinho.html">Carrinho</a></li>
         </ul>
       </div>
       <div>
@@ -261,6 +234,7 @@
   </footer>
 
   <!-- Scripts -->
+  <script src="js/sessao.js"></script>
   <script src="menu.js"></script>
   <script src="js/config.js"></script>
   <script src="js/efeitos.js"></script>
